@@ -9,12 +9,18 @@ class Inscription extends Component {
     return (
       <View style={{justifyContent: 'center'}}>
         <Image
-          source={require('../assets/google.png')}
-          style={{width: 100, height: 100, alignSelf: 'center'}}
+          source={require('../assets/myFood.png')}
+          style={styles.myFoodImage}
         />
-        <TouchableHighlight style={styles.touchable} onPress={() => signIn()}>
-          <Text style={styles.button}>Continuer avec Google</Text>
-        </TouchableHighlight>
+        <View style={styles.viewGoogle}>
+          <Image
+            source={require('../assets/google.png')}
+            style={styles.imageGoogle}
+          />
+          <TouchableHighlight style={styles.touchable} onPress={() => signIn()}>
+            <Text style={styles.button}>Continuer avec Google</Text>
+          </TouchableHighlight>
+        </View>
       </View>
     );
   }
