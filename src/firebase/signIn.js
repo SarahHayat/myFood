@@ -24,4 +24,23 @@ const signIn = async () => {
     }
   }
 };
-export {signIn};
+
+const isSignedIn = async () => {
+  const isSignedIn = await GoogleSignin.isSignedIn();
+  this.setState({isLoginScreenPresented: !isSignedIn});
+};
+
+const getCurrentUser = async () => {
+  const currentUser = await GoogleSignin.getCurrentUser();
+  this.setState({currentUser});
+};
+
+const signOut = async () => {
+  try {
+    await GoogleSignin.signOut();
+    this.setState({user: null}); // Remember to remove the user from your app's state as well
+  } catch (error) {
+    console.error(error);
+  }
+};
+export {signIn, isSignedIn, getCurrentUser, signOut};
