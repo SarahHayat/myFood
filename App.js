@@ -1,13 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import {Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableHighlight, View} from 'react-native';
-import {getMeal} from "./api/meal/meal";
-import MealPageComponent from "./MealPageComponent";
+import React from 'react';
+import SafeAreaView from 'react-native/Libraries/Components/SafeAreaView/SafeAreaView';
+import {Navigator} from './src/navigations/router';
 
 const App = () => {
-
-  return (
-    <MealPageComponent id={52773}/>
-  );
+  return <Navigator />;
 };
 
 export default App;

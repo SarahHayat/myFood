@@ -11,8 +11,11 @@ import auth from '@react-native-firebase/auth';
 import {styles} from '../styles/signInStyles';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {initGoogle} from '../firebase/google';
+import {useNavigation} from '@react-navigation/native';
 
-const Inscription = ({navigation}) => {
+const Inscription = () => {
+  const navigation = useNavigation();
+
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
@@ -22,10 +25,21 @@ const Inscription = ({navigation}) => {
       setInitializing(false);
     }
   }
+
+  async function onGoogleButtonPress() {
+    // Get the users ID token
+    const {idToken} = await GoogleSignin.signIn();
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    return auth().signInWithCredential(googleCredential);
+  }
+
   useEffect(() => {
     initGoogle();
     return auth().onAuthStateChanged(onAuthStateChanged);
-  }, []);
+  });
 
   if (!user) {
     return (
@@ -47,19 +61,14 @@ const Inscription = ({navigation}) => {
     return null;
   }
 
-  async function onGoogleButtonPress() {
-    // Get the users ID token
-    const {idToken} = await GoogleSignin.signIn();
-
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-    return auth().signInWithCredential(googleCredential);
-  }
-
   return (
     <View>
-      <TouchableOpacity onPress={navigation.navigate('mealList')} />
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('mealList');
+        }}
+      />
+      <Text>Clic</Text>
     </View>
   );
 };

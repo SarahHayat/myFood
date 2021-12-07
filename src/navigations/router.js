@@ -5,6 +5,7 @@ import Inscription from '../components/inscription';
 import MealList from '../components/mealList';
 import Home from '../components/home';
 import MealDetail from '../components/mealDetail';
+import MealPageComponent from '../components/MealPageComponent';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,11 @@ function Navigator() {
           component={MealList}
           options={{headerLeft: null}}
         />
-        <Stack.Screen name="mealDetail" component={MealDetail} />
+        <Stack.Screen
+          name="mealDetail"
+          component={MealPageComponent}
+          id={({params}) => params.id}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
