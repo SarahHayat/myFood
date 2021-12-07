@@ -20,14 +20,9 @@ import {
 
 import {
   Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import HelloWorld from './src/components/inscription';
 import {initGoogle} from './src/firebase/google';
-import Inscription from './src/components/inscription';
+import { Navigator } from "./src/navigations/router";
 
 const Section = ({children, title}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -56,9 +51,6 @@ const Section = ({children, title}): Node => {
 };
 
 const App: () => Node = () => {
-  useEffect(() => {
-    initGoogle();
-  }, []);
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -69,7 +61,7 @@ const App: () => Node = () => {
 
   return (
     <SafeAreaView style={backgroundStyle}>
-      <Inscription />
+      <Navigator/>
     </SafeAreaView>
   );
 };
