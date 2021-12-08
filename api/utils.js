@@ -10,10 +10,12 @@ function apiStringsToArray(data, key, startIndex, endIndex) {
         }
     }
 
+
     return elements
 }
 
 export function parseMealData(data) {
+    console.log({data})
     return {
         id: data.idMeal,
         name: data.strMeal,
@@ -21,7 +23,7 @@ export function parseMealData(data) {
         origin: data.strArea,
         instructions: data.strInstructions,
         imageUrl: data.strMealThumb,
-        tags: data.strTags.split(','),
+        // tags: data.strTags.split(','),
         youtubeUrl: data.strYoutube,
         ingredients: apiStringsToArray(data, 'strIngredient', 1, 20),
         measures: apiStringsToArray(data, 'strMeasure', 1, 20),

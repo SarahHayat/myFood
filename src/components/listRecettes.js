@@ -1,4 +1,4 @@
-import React, {useEffect, useState, Component} from 'react';
+import React, { useEffect, useState, Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,19 +11,21 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { useNavigation } from '@react-navigation/native';
 
 const listRecettes = () => {
   const [isLoading, setLoading] = useState(true);
+  const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [image, setImage] = useState([]);
   const [searchText, setSearchText] = useState(null);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    {label: 'Categories', value: 'Categories'},
-    {label: 'Pays', value: 'Pays'},
-    {label: 'Ingrédients', value: 'Ingredients'},
-    {label: 'Nom de la recette', value: 'Nom de la recette'},
+    { label: 'Categories', value: 'Categories' },
+    { label: 'Pays', value: 'Pays' },
+    { label: 'Ingrédients', value: 'Ingredients' },
+    { label: 'Nom de la recette', value: 'Nom de la recette' },
   ]);
 
   const getRecettes = () => {
@@ -65,13 +67,15 @@ const listRecettes = () => {
       <FlatList
         style={styles.flatListMeal}
         data={data.meals}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <View>
-            <TouchableOpacity style={styles.buttonMeal}>
+            <TouchableOpacity onPress={() => {
+              navigation.navigate('mealDetail', { id: item.idMeal });
+            }} style={styles.buttonMeal}>
               <Text style={styles.titleMeal}>{item.strMeal}</Text>
               <Image
-                source={{uri: item.strMealThumb}}
-                style={{width: 100, height: 100}}
+                source={{ uri: item.strMealThumb }}
+                style={{ width: 100, height: 100 }}
               />
               <Text>{'\n'}</Text>
             </TouchableOpacity>

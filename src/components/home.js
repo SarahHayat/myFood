@@ -20,7 +20,7 @@ const Home = () => {
         <Inscription />
         <Button
           title="Go to Meal List"
-          onPress={() => navigation.navigate('mealList', {id: 52772})}
+          onPress={() => navigation.navigate('listRecettes')}
         />
       </View>
     </SafeAreaView>

@@ -6,6 +6,7 @@ import MealList from '../components/mealList';
 import Home from '../components/home';
 import MealDetail from '../components/mealDetail';
 import MealPageComponent from '../components/MealPageComponent';
+import listRecettes from '../components/listRecettes';
 
 const Stack = createStackNavigator();
 
@@ -16,8 +17,8 @@ function Navigator() {
         <Stack.Screen name="home" component={Home} />
         <Stack.Screen name="inscription" component={Inscription} />
         <Stack.Screen
-          name="mealList"
-          component={MealList}
+          name="listRecettes"
+          component={listRecettes}
           options={{headerLeft: null}}
         />
         <Stack.Screen
