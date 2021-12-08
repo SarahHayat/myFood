@@ -2,9 +2,10 @@ import React, { useEffect, useState, Component } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Image, Alert, FlatList, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { useNavigation } from '@react-navigation/native';
 
 const listRecettes = () => {
-
+    const navigation = useNavigation();
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const [image, setImage] = useState([]);
@@ -45,7 +46,7 @@ const listRecettes = () => {
             <Text style={styles.titleFiltre}>Filtrer par : </Text>
             <Text>{"\n"}</Text>
             <Text style={styles.titleValeur}>{searchText} :</Text>
-            
+
 
             <DropDownPicker
                 open={open}
@@ -62,7 +63,9 @@ const listRecettes = () => {
                 data={data.meals}
                 renderItem={({ item }) => (
                     <View>
-                        <TouchableOpacity style={styles.buttonMeal}>
+                        <TouchableOpacity onPress={() => {
+                            navigation.navigate('mealDetail', { id: item.idMeal });
+                        }} style={styles.buttonMeal}>
                             <Text style={styles.titleMeal}>{item.strMeal}</Text>
                             <Image source={{ uri: item.strMealThumb }}
                                 style={{ width: 100, height: 100 }}
