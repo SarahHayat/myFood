@@ -13,9 +13,12 @@
     "@react-native-firebase/app": "^13.1.0",
     "@react-native-google-signin/google-signin": "^7.0.1",
     "@reduxjs/toolkit": "^1.6.2",
+    "axios": "^0.24.0",
     "react": "17.0.2",
     "react-native": "0.66.3",
-    "redux": "^4.1.2"
+    "react-native-dropdown-picker": "^5.2.3",
+    "redux": "^4.1.2",
+    "yarn": "^1.22.17"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
