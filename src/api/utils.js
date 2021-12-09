@@ -20,7 +20,6 @@ export function parseMealData(data) {
     origin: data.strArea,
     instructions: data.strInstructions,
     imageUrl: data.strMealThumb,
-    tags: data.strTags.split(','),
     youtubeUrl: data.strYoutube,
     ingredients: apiStringsToArray(data, 'strIngredient', 1, 20),
     measures: apiStringsToArray(data, 'strMeasure', 1, 20),

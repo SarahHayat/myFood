@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Inscription from '../components/inscription';
@@ -10,14 +10,19 @@ import reducer from '../redux/reducer';
 import {useSelector} from 'react-redux';
 import NewRecipe from '../components/NewRecipe';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {getRandomMeal} from "../api/meal/meal";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const loadRandomMealId = async () => {
+    let randomMeal = await getRandomMeal();
+    return randomMeal.id;
+};
+
 function Navigator() {
   const user = useSelector(s => s.user);
-  // let user = null;
-  console.log('user ', user);
+
   return user ? (
     <Stack.Navigator
       initialRouteName="mealList"
@@ -39,6 +44,7 @@ function Navigator() {
 }
 
 function TabNavigator() {
+    const navigation = useNavigation();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -55,6 +61,22 @@ function TabNavigator() {
           ),
         }}
       />
+        <Tab.Screen
+            name="Recette aléatoire"
+            component={Navigator}
+            listeners={{
+                tabPress: (async e => {
+                    e.preventDefault();
+                    navigation.navigate('mealDetail', {id: await loadRandomMealId()});
+                })
+            }}
+            options={{
+                headerShown: false,
+                tabBarIcon: ({color}) => (
+                    <Ionicons name="list" color={color} size={26} />
+                ),
+            }}
+        />
     </Tab.Navigator>
   );
 }

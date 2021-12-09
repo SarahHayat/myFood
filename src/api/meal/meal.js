@@ -18,3 +18,18 @@ export function getMeal(mealId) {
       })
   );
 }
+
+export function getRandomMeal() {
+    return (
+        axios
+            .get(API_BASE_URL + 'random.php')
+            .then(function (response) {
+                return parseMealData(response.data.meals[0]);
+            })
+            .catch(function () {
+                return {
+                    error: 'Cannot get data for random meal',
+                }
+            })
+    )
+}
