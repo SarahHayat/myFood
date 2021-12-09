@@ -35,8 +35,6 @@ const NewRecipe = () => {
   const receipes = useSelector(s => s.receipe.newReceipe);
   const ingredients = useSelector(s => s.receipe.ingredients);
 
-  console.log('ingrsient', ingredients);
-
   const dispatch = useDispatch();
 
   const navigation = useNavigation();
@@ -71,22 +69,12 @@ const NewRecipe = () => {
     [dispatch],
   );
   const addReceipe = useCallback(() => {
-    console.log(title);
     if (title === null) {
       setError(true);
       return;
     } else {
       setError(false);
     }
-    // let newReceipe = {
-    //   id: Math.random(),
-    //   name: title,
-    //   category: category,
-    //   origin: origin,
-    //   instructions: instructions,
-    //   imageUrl: file,
-    //   ingredients: ingredients,
-    // };
     dispatch({
       type: 'create',
       value: {
@@ -152,7 +140,7 @@ const NewRecipe = () => {
 
   return (
     <KeyboardAwareScrollView
-      style={{flex: 1}}
+      style={{flex: 1, marginTop: 20}}
       onKeyboardWillShow={(frames: Object) => {}}>
       {title ? (
         <Text style={styles.titleText}>{title}</Text>

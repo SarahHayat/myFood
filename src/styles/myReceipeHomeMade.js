@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     margin: 8,
     padding: 5,
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   image: {
     justifyContent: 'flex-start',

@@ -1,15 +1,5 @@
 const initialState = {
-  newReceipe: [
-    {
-      id: Math.random(),
-      name: 'Test',
-      category: 'category',
-      origin: 'origin',
-      instructions: 'instructions',
-      imageUrl: 'file',
-      ingredients: 'ingredients',
-    },
-  ],
+  newReceipe: [],
   ingredients: [
     {id: 1, title: 'pain'},
     {id: 2, title: 'fromage'},
@@ -17,12 +7,15 @@ const initialState = {
 };
 
 const createNewReceipe = (state, action) => {
-  console.log('tableau de recette = ', state.newReceipe);
-  console.log('here avant le copy du tableau');
-
   let copy = [...state.newReceipe];
-  console.log('copy= ', copy);
   copy.push(action.value);
+  return {
+    ...state,
+    newReceipe: copy,
+  };
+};
+const deleteReceipe = (state, action) => {
+  let copy = state.newReceipe.filter(o => action.id !== o.id);
   return {
     ...state,
     newReceipe: copy,
@@ -30,7 +23,6 @@ const createNewReceipe = (state, action) => {
 };
 
 const addIngredient = (state, action) => {
-  console.log('action.value', action.value);
   let copy = [...state.ingredients];
   copy.push(action.value);
   return {
@@ -62,6 +54,8 @@ const receipeReducer = (state = initialState, action) => {
       return removeIngredient(state, action);
     case 'erase':
       return eraseAllIngredient(state, action);
+    case 'deleteReceipe':
+      return deleteReceipe(state, action);
     default:
       return state;
   }
