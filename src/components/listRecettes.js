@@ -13,9 +13,8 @@ import axios from 'axios';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useNavigation } from '@react-navigation/native';
 
-const listRecettes = () => {
+const ListRecettes = props => {
   const [isLoading, setLoading] = useState(true);
-  const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [image, setImage] = useState([]);
   const [searchText, setSearchText] = useState(null);
@@ -27,6 +26,8 @@ const listRecettes = () => {
     { label: 'Ingrédients', value: 'Ingredients' },
     { label: 'Nom de la recette', value: 'Nom de la recette' },
   ]);
+
+  const navigation = useNavigation();
 
   const getRecettes = () => {
     axios
@@ -120,4 +121,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default listRecettes;
+export default ListRecettes;

@@ -4,9 +4,9 @@ import {
   Text,
   Image,
   TouchableHighlight,
-  Button,
   TouchableOpacity,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import {styles} from '../styles/signInStyles';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -16,11 +16,21 @@ import {useNavigation} from '@react-navigation/native';
 const Inscription = () => {
   const navigation = useNavigation();
 
+  const user = useSelector(s => s.user);
+  const dispatch = useDispatch();
+
   const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
+
+  useEffect(() => {
+    initGoogle();
+    return auth().onAuthStateChanged(onAuthStateChanged);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function onAuthStateChanged(user) {
-    setUser(user);
+    // setUser(user);
+    // TODO : Changer la valeur de user quand le sign sera réglé
+    dispatch({type: 'update', value: 'user'});
     if (initializing) {
       setInitializing(false);
     }
@@ -30,16 +40,10 @@ const Inscription = () => {
     // Get the users ID token
     const {idToken} = await GoogleSignin.signIn();
 
-    // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
     return auth().signInWithCredential(googleCredential);
   }
-
-  useEffect(() => {
-    initGoogle();
-    return auth().onAuthStateChanged(onAuthStateChanged);
-  });
 
   if (!user) {
     return (
@@ -50,7 +54,11 @@ const Inscription = () => {
         />
         <TouchableHighlight
           style={styles.touchable}
-          onPress={onGoogleButtonPress}>
+          onPress={() =>
+            onGoogleButtonPress().then(() =>
+              console.log('Signed in with Google!'),
+            )
+          }>
           <Text style={styles.button}>Continuer avec Google</Text>
         </TouchableHighlight>
       </View>
