@@ -26,7 +26,7 @@ const MealPageComponent = props => {
 
   useEffect(() => {
     loadMeal();
-  });
+  }, [route.params.id]);
 
   return (
     <SafeAreaView style={styles.screen}>
