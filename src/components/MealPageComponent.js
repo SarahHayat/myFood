@@ -1,5 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, Image, Linking, SafeAreaView, ScrollView, StyleSheet, Text, TouchableHighlight} from 'react-native';
+import {
+    FlatList,
+    Image,
+    Linking,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableHighlight,
+    View
+} from 'react-native';
 
 import {getMeal} from '../api/meal/meal';
 import {useNavigation} from '@react-navigation/native';
@@ -35,39 +45,41 @@ const MealPageComponent = props => {
   }, [route.params.id]);
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <Text>{meal.name} | {meal.category}</Text>
-        <Text>{meal.origin}</Text>
-        <Image source={{
-    uri: API_FLAG_URL + API_FLAG_CONVERT[`${meal.origin}`] + API_FLAG_IMAGE_EXTENSION
-}}
-        style={styles.flagImage}/>
-      <Image
-        style={styles.mealThumbnail}
-        source={{
-          uri: meal.imageUrl,
-        }}
-      />
+    <SafeAreaView>
+        <ScrollView>
+            <View style={styles.screen}>
+                <Text>{meal.name} | {meal.category}</Text>
+                <Text>{meal.origin}</Text>
+                <Image source={{
+                    uri: API_FLAG_URL + API_FLAG_CONVERT[`${meal.origin}`] + API_FLAG_IMAGE_EXTENSION
+                }}
+                       style={styles.flagImage}/>
+                <Image
+                    style={styles.mealThumbnail}
+                    source={{
+                        uri: meal.imageUrl,
+                    }}
+                />
 
-      <FlatList
-          numColumns={5}
-          style={{
-              flex: 1,
-              flexDirection: 'row'
-          }}
-        data={meal.ingredients}
-        renderItem={({item, index}) => {
-            return <IngredientComponent name={item} ref={index}/>;
-        }}
-      />
+                <FlatList
+                    numColumns={5}
+                    style={{
+                        flex: 1,
+                        flexDirection: 'row'
+                    }}
+                    data={meal.ingredients}
+                    renderItem={({item, index}) => {
+                        return <IngredientComponent name={item} ref={index}/>;
+                    }}
+                />
 
-      <ScrollView style={styles.instructionsView}>
-          <Text style={styles.instructions}>{meal.instructions}</Text>
+                <Text style={styles.instructions}>{meal.instructions}</Text>
+
+                <TouchableHighlight onPress={() => Linking.openURL(meal.youtubeUrl)}>
+                    <Ionicons name="logo-youtube" color='red' size={75} />
+                </TouchableHighlight>
+            </View>
       </ScrollView>
-
-        <TouchableHighlight onPress={() => Linking.openURL(meal.youtubeUrl)}>
-            <Ionicons name="logo-youtube" color='red' size={75} />
-        </TouchableHighlight>
     </SafeAreaView>
   );
 };
