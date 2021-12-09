@@ -54,6 +54,7 @@ const NewRecipe = () => {
     setCategory('');
     setOrigin('');
     setInstruction('');
+    setFile('');
   };
   const addIngredient = useCallback(
     text => {

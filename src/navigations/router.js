@@ -12,20 +12,21 @@ import NewRecipe from '../components/NewRecipe';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MyReceipeHomeMade from '../components/MyReceipeHomeMade';
 import {Inscription} from '../components/Inscription';
-import {getRandomMeal} from "../api/meal/meal";
+import {getRandomMeal} from '../api/meal/meal';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const loadRandomMealId = async () => {
-    let randomMeal = await getRandomMeal();
-    return randomMeal.id;
+  let randomMeal = await getRandomMeal();
+  return randomMeal.id;
 };
 
 function Navigator() {
-  const user = useSelector(s => s.auth.user);
+  // const user = useSelector(s => s.auth.user);
   // let user = null;
   console.log('user ', user);
+  let user = 'user';
   return user ? (
     <Stack.Navigator
       initialRouteName="mealList"
@@ -47,7 +48,7 @@ function Navigator() {
 }
 
 function TabNavigator() {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -64,22 +65,22 @@ function TabNavigator() {
           ),
         }}
       />
-        <Tab.Screen
-            name="Recette aléatoire"
-            component={Navigator}
-            listeners={{
-                tabPress: (async e => {
-                    e.preventDefault();
-                    navigation.navigate('mealDetail', {id: await loadRandomMealId()});
-                })
-            }}
-            options={{
-                headerShown: false,
-                tabBarIcon: ({color}) => (
-                    <Ionicons name="list" color={color} size={26} />
-                ),
-            }}
-        />
+      <Tab.Screen
+        name="Recette aléatoire"
+        component={MealPageComponent}
+        listeners={{
+          tabPress: async e => {
+            e.preventDefault();
+            navigation.navigate('mealDetail', {id: await loadRandomMealId()});
+          },
+        }}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color}) => (
+            <Ionicons name="shuffle-outline" color={color} size={26} />
+          ),
+        }}
+      />
       <Tab.Screen
         name="Nouvelle Recette"
         component={NewRecipe}
