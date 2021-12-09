@@ -1,5 +1,15 @@
 const initialState = {
-  newReceipe: [],
+  newReceipe: [
+    {
+      id: Math.random(),
+      name: 'Test',
+      category: 'category',
+      origin: 'origin',
+      instructions: 'instructions',
+      imageUrl: 'file',
+      ingredients: 'ingredients',
+    },
+  ],
   ingredients: [
     {id: 1, title: 'pain'},
     {id: 2, title: 'fromage'},
@@ -7,7 +17,12 @@ const initialState = {
 };
 
 const createNewReceipe = (state, action) => {
-  let copy = [...state.newReceipe, action.value];
+  console.log('tableau de recette = ', state.newReceipe);
+  console.log('here avant le copy du tableau');
+
+  let copy = [...state.newReceipe];
+  console.log('copy= ', copy);
+  copy.push(action.value);
   return {
     ...state,
     newReceipe: copy,

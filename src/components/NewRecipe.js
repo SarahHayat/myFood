@@ -4,7 +4,6 @@ import {
   FlatList,
   Image,
   PermissionsAndroid,
-  SafeAreaView,
   ScrollView,
   Text,
   TextInput,
@@ -33,7 +32,7 @@ const NewRecipe = () => {
   const [instructions, setInstruction] = useState({});
   const [error, setError] = useState(false);
 
-  const receipe = useSelector(s => s.receipe.newReceipe);
+  const receipes = useSelector(s => s.receipe.newReceipe);
   const ingredients = useSelector(s => s.receipe.ingredients);
 
   console.log('ingrsient', ingredients);
@@ -79,16 +78,27 @@ const NewRecipe = () => {
     } else {
       setError(false);
     }
-    let receipe = {
-      id: Math.random(),
-      name: title,
-      category: category,
-      origin: origin,
-      instructions: instructions,
-      imageUrl: file,
-      ingredients: ingredients,
-    };
-    dispatch({type: 'create', value: receipe});
+    // let newReceipe = {
+    //   id: Math.random(),
+    //   name: title,
+    //   category: category,
+    //   origin: origin,
+    //   instructions: instructions,
+    //   imageUrl: file,
+    //   ingredients: ingredients,
+    // };
+    dispatch({
+      type: 'create',
+      value: {
+        id: Math.random(),
+        name: title,
+        category: category,
+        origin: origin,
+        instructions: instructions,
+        imageUrl: file,
+        ingredients: ingredients,
+      },
+    });
     dispatch({type: 'erase'});
     emptyAllInput();
     navigation.navigate('Mes recettes maison');
