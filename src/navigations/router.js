@@ -2,14 +2,16 @@ import * as React from 'react';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Inscription from '../components/inscription';
+import OldInscription from '../components/oldInscription';
 import Home from '../components/home';
 import MealPageComponent from '../components/MealPageComponent';
 import ListRecettes from '../components/listRecettes';
-import reducer from '../redux/reducer';
+import authReducer from '../redux/authReducer';
 import {useSelector} from 'react-redux';
 import NewRecipe from '../components/NewRecipe';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MyReceipeHomeMade from '../components/MyReceipeHomeMade';
+import {Inscription} from '../components/Inscription';
 import {getRandomMeal} from "../api/meal/meal";
 
 const Stack = createStackNavigator();
@@ -21,8 +23,9 @@ const loadRandomMealId = async () => {
 };
 
 function Navigator() {
-  const user = useSelector(s => s.user);
-
+  const user = useSelector(s => s.auth.user);
+  // let user = null;
+  console.log('user ', user);
   return user ? (
     <Stack.Navigator
       initialRouteName="mealList"
@@ -32,8 +35,8 @@ function Navigator() {
         name="mealDetail"
         component={MealPageComponent}
         id={({params}) => params.id}
+        data={({params}) => params.data}
       />
-      <Stack.Screen name="newRecipe" component={NewRecipe} />
     </Stack.Navigator>
   ) : (
     <Stack.Navigator initialRouteName="home">
@@ -48,11 +51,11 @@ function TabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: 'tomato',
+        tabBarActiveTintColor: 'coral',
         tabBarInactiveTintColor: 'gray',
       }}>
       <Tab.Screen
-        name="Nouvelle Recette"
+        name="Recettes"
         component={Navigator}
         options={{
           headerShown: false,
@@ -77,6 +80,26 @@ function TabNavigator() {
                 ),
             }}
         />
+      <Tab.Screen
+        name="Nouvelle Recette"
+        component={NewRecipe}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color}) => (
+            <Ionicons name="camera-outline" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Mes recettes maison"
+        component={MyReceipeHomeMade}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color}) => (
+            <Ionicons name="restaurant-outline" color={color} size={26} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }

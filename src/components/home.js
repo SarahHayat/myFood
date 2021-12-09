@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import {Button, Text, View} from 'react-native';
-import Inscription from './inscription';
+import OldInscription from './oldInscription';
 import SafeAreaView from 'react-native/Libraries/Components/SafeAreaView/SafeAreaView';
+import {Inscription} from './Inscription';
 
 const Home = () => {
   return (
