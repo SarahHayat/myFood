@@ -35,6 +35,8 @@ const MealPageComponent = props => {
   });
 
   const [meal, setMeal] = useState({});
+  const [favorite, setfavorite] = useState([]);
+  const [nameIcon, setNameIcon] = useState('heart-o');
 
   const loadMeal = async () => {
     setMeal(await getMeal(route.params.id));
@@ -43,6 +45,25 @@ const MealPageComponent = props => {
   useEffect(() => {
     loadMeal();
   }, [route.params.id]);
+
+  function defineFavorite() {
+    let copy = favorite;
+    let copyIcon = nameIcon;
+    if (copy.includes(route.params.id)) {
+      for (var i = 0; i < copy.length; i++) {
+        if (copy[i] === route.params.id) {
+          copy.splice(i, 1);
+          copyIcon = 'heart-o';
+        }
+      }
+    } else {
+      copy.push(route.params.id);
+      copyIcon = 'heart';
+    }
+    setfavorite(copy);
+    setNameIcon(copyIcon);
+    console.log(copy);
+  }
 
   return (
     <SafeAreaView>
@@ -60,7 +81,7 @@ const MealPageComponent = props => {
                         uri: meal.imageUrl,
                     }}
                 />
-
+              <Icon name={nameIcon} size={30} color="#900" />
                 <FlatList
                     numColumns={5}
                     style={{
@@ -74,7 +95,7 @@ const MealPageComponent = props => {
                 />
 
                 <Text style={styles.instructions}>{meal.instructions}</Text>
-
+              <Icon name={nameIcon} size={30} color="'black" />
                 <TouchableHighlight onPress={() => Linking.openURL(meal.youtubeUrl)}>
                     <Ionicons name="logo-youtube" color='red' size={75} />
                 </TouchableHighlight>
