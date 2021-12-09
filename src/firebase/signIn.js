@@ -5,13 +5,10 @@ import {
 
 const signIn = async () => {
   try {
-    console.log('HEEEERE');
     await GoogleSignin.hasPlayServices();
     const userInfo = await GoogleSignin.signIn();
-    console.log('user info = ', userInfo);
     this.setState({userInfo});
   } catch (error) {
-    console.log('error ', error.code);
     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
       // user cancelled the login flow
     } else if (error.code === statusCodes.IN_PROGRESS) {
@@ -19,7 +16,6 @@ const signIn = async () => {
     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
       // play services not available or outdated
     } else {
-      console.log('error');
       // some other error happened
     }
   }

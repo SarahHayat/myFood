@@ -11,8 +11,9 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {useNavigation} from '@react-navigation/native';
 
-const listRecettes = () => {
+const ListRecettes = props => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [image, setImage] = useState([]);
@@ -26,7 +27,10 @@ const listRecettes = () => {
     {label: 'Nom de la recette', value: 'Nom de la recette'},
   ]);
 
+  const navigation = useNavigation();
+
   const getRecettes = () => {
+    console.log('here dans recettees');
     axios
       .get('https://www.themealdb.com/api/json/v1/1/filter.php?a=French')
       .then(json => {
@@ -45,7 +49,6 @@ const listRecettes = () => {
   const handleTextChange = text => {
     return setSearchText(text);
   };
-
   return (
     <SafeAreaView>
       <Text style={styles.titleFiltre}>Filtrer par : </Text>
@@ -67,7 +70,11 @@ const listRecettes = () => {
         data={data.meals}
         renderItem={({item}) => (
           <View>
-            <TouchableOpacity style={styles.buttonMeal}>
+            <TouchableOpacity
+              style={styles.buttonMeal}
+              onPress={() =>
+                navigation.navigate('mealDetail', {id: item.idMeal})
+              }>
               <Text style={styles.titleMeal}>{item.strMeal}</Text>
               <Image
                 source={{uri: item.strMealThumb}}
@@ -116,4 +123,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default listRecettes;
+export default ListRecettes;

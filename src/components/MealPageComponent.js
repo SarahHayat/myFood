@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, SafeAreaView, StyleSheet, Text} from 'react-native';
 
-import {getMeal} from '../../api/meal/meal';
+import {getMeal} from '../api/meal/meal';
 import {useNavigation} from '@react-navigation/native';
 
 const MealPageComponent = props => {
