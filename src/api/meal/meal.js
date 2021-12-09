@@ -7,7 +7,7 @@ export function getMeal(mealId) {
   return (
     axios
       // eslint-disable-next-line no-undef
-      .get(API_BASE_URL + 'lookup.php?i=' + mealId)
+      .get(API_MEAL_URL + 'lookup.php?i=' + mealId)
       .then(function (response) {
         return parseMealData(response.data.meals[0]);
       })
@@ -22,7 +22,7 @@ export function getMeal(mealId) {
 export function getRandomMeal() {
     return (
         axios
-            .get(API_BASE_URL + 'random.php')
+            .get(API_MEAL_URL + 'random.php')
             .then(function (response) {
                 return parseMealData(response.data.meals[0]);
             })
