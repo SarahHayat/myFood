@@ -1,8 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, Image, SafeAreaView, StyleSheet, Text} from 'react-native';
+import {
+  FlatList,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 
 import {getMeal} from '../api/meal/meal';
 import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const MealPageComponent = props => {
   // const navigation = useNavigation();
@@ -19,6 +27,8 @@ const MealPageComponent = props => {
   });
 
   const [meal, setMeal] = useState({});
+  const [favorite, setfavorite] = useState([]);
+  const [nameIcon, setNameIcon] = useState('heart-o');
 
   const loadMeal = async () => {
     setMeal(await getMeal(route.params.id));
@@ -27,6 +37,25 @@ const MealPageComponent = props => {
   useEffect(() => {
     loadMeal();
   });
+
+  function defineFavorite() {
+    let copy = favorite;
+    let copyIcon = nameIcon;
+    if (copy.includes(route.params.id)) {
+      for (var i = 0; i < copy.length; i++) {
+        if (copy[i] === route.params.id) {
+          copy.splice(i, 1);
+          copyIcon = 'heart-o';
+        }
+      }
+    } else {
+      copy.push(route.params.id);
+      copyIcon = 'heart';
+    }
+    setfavorite(copy);
+    setNameIcon(copyIcon);
+    console.log(copy);
+  }
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -40,7 +69,9 @@ const MealPageComponent = props => {
           uri: meal.imageUrl,
         }}
       />
-
+      <TouchableOpacity onPress={defineFavorite}>
+        <Icon name={nameIcon} size={30} color="#900" />
+      </TouchableOpacity>
       <Text>Ingredients</Text>
       <FlatList
         data={meal.ingredients}
@@ -49,7 +80,7 @@ const MealPageComponent = props => {
         }}
       />
       <Text>{meal.instructions}</Text>
-
+      <Icon name={nameIcon} size={30} color="'black" />
       <Text>Youtube video: {meal.youtubeUrl}</Text>
     </SafeAreaView>
   );
