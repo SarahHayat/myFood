@@ -13,10 +13,10 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {initGoogle} from '../firebase/google';
 import {useNavigation} from '@react-navigation/native';
 
-const Inscription = () => {
+const OldInscription = () => {
   const navigation = useNavigation();
 
-  const user = useSelector(s => s.user);
+  const user = useSelector(s => s.auth.user);
   const dispatch = useDispatch();
 
   const [initializing, setInitializing] = useState(true);
@@ -81,4 +81,4 @@ const Inscription = () => {
   );
 };
 
-export default Inscription;
+export default OldInscription;

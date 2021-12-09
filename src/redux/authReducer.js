@@ -1,5 +1,6 @@
 const initialState = {
-  user: '',
+  user: null,
+  newReceipe: {},
 };
 const getUser = (state, action) => {
   return {
@@ -8,7 +9,7 @@ const getUser = (state, action) => {
   };
 };
 
-const reducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'update':
       return getUser(state, action);
@@ -17,4 +18,4 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-export default reducer;
+export default authReducer;
