@@ -4,7 +4,6 @@ const initialState = {
 
 const addToFavorite = (state, action) => {
   let copy = [...state.favorite];
-  console.log('copy= ', copy);
   copy.push(action.value);
   return {
     ...state,
@@ -14,10 +13,8 @@ const addToFavorite = (state, action) => {
 
 const removeToFavorite = (state, action) => {
   // let copy = state.favorite.filter(o => action.id !== o.id);
-  console.log('remove reducer');
   let copy = [...state.favorite];
   copy.splice(copy.indexOf(action.id), 1);
-  console.log(copy);
   return {
     ...state,
     favorite: copy,
