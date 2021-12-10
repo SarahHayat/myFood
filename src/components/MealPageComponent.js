@@ -19,6 +19,7 @@ import IngredientComponent from './IngredientComponent';
 import '../../global';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
+import {Picker} from '@react-native-picker/picker';
 
 const MealPageComponent = props => {
   // const navigation = useNavigation();
@@ -81,28 +82,18 @@ const MealPageComponent = props => {
             {meal.name} | {meal.category}
           </Text>
           <Text>{meal.origin}</Text>
-            {
-                route.params.data.isCustomMeal ? (
-                    <></>
-                ): (
-                    <Image source={{
-                        uri: API_FLAG_URL + API_FLAG_CONVERT[`${meal.origin}`] + API_FLAG_IMAGE_EXTENSION
-                    }}
-                           style={styles.flagImage}/>
-                )
-            }
-            {
-                route.params.data.isCustomMeal ? (
-                    <></>
-                ): (
-                    <Image
-                        style={styles.mealThumbnail}
-                        source={{
-                            uri: meal.imageUrl,
-                        }}
-                    />
-                )
-            }
+            <Image source={{
+                uri: API_FLAG_URL + API_FLAG_CONVERT[`${meal.origin}`] + API_FLAG_IMAGE_EXTENSION
+            }}
+                   style={styles.flagImage}/>
+
+            <Image
+                style={styles.mealThumbnail}
+                source={{
+                    uri: meal.imageUrl,
+                }}
+            />
+
           {favorites.includes(route.params.data.id) ? (
             <TouchableOpacity
               onPress={() => {
