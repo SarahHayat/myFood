@@ -1,13 +1,10 @@
 import React, {useEffect} from 'react';
 import {Button, Text, View} from 'react-native';
-import Inscription from './inscription';
-import {isSignedIn} from '../firebase/signIn';
-import {useNavigation} from '@react-navigation/native';
+import OldInscription from './oldInscription';
 import SafeAreaView from 'react-native/Libraries/Components/SafeAreaView/SafeAreaView';
+import {Inscription} from './Inscription';
 
 const Home = () => {
-  const navigation = useNavigation();
-  console.log('dans home');
   return (
     <SafeAreaView style={{flex: 1}}>
       <View
@@ -16,12 +13,7 @@ const Home = () => {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <Text>test</Text>
         <Inscription />
-        <Button
-          title="Go to Meal List"
-          onPress={() => navigation.navigate('listRecettes')}
-        />
       </View>
     </SafeAreaView>
   );

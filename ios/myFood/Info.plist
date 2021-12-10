@@ -62,5 +62,15 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Ionicons.ttf</string>
+	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Micro</string>
 </dict>
 </plist>

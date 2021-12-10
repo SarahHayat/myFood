@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderWidth: 1,
     borderRadius: 30,
+    color: 'black',
   },
   touchable: {
     margin: 20,

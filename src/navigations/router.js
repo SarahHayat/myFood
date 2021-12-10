@@ -1,33 +1,107 @@
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import Inscription from '../components/inscription';
-import MealList from '../components/mealList';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import OldInscription from '../components/oldInscription';
 import Home from '../components/home';
-import MealDetail from '../components/mealDetail';
 import MealPageComponent from '../components/MealPageComponent';
-import listRecettes from '../components/listRecettes';
+import ListRecettes from '../components/listRecettes';
+import authReducer from '../redux/authReducer';
+import {useSelector} from 'react-redux';
+import NewRecipe from '../components/NewRecipe';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MyReceipeHomeMade from '../components/MyReceipeHomeMade';
+import {Inscription} from '../components/Inscription';
+import {getRandomMeal} from '../api/meal/meal';
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const loadRandomMealId = async () => {
+  let randomMeal = await getRandomMeal();
+  return randomMeal.id;
+};
 
 function Navigator() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="home">
-        <Stack.Screen name="home" component={Home} />
-        <Stack.Screen name="inscription" component={Inscription} />
-        <Stack.Screen
-          name="listRecettes"
-          component={listRecettes}
-          options={{headerLeft: null}}
-        />
-        <Stack.Screen
-          name="mealDetail"
-          component={MealPageComponent}
-          id={({params}) => params.id}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+  // const user = useSelector(s => s.auth.user);
+  // let user = null;
+  console.log('user ', user);
+  let user = 'user';
+  return user ? (
+    <Stack.Navigator
+      initialRouteName="mealList"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="mealList" component={ListRecettes} />
+      <Stack.Screen
+        name="mealDetail"
+        component={MealPageComponent}
+        id={({params}) => params.id}
+        data={({params}) => params.data}
+      />
+    </Stack.Navigator>
+  ) : (
+    <Stack.Navigator initialRouteName="home">
+      <Stack.Screen name="home" component={Home} />
+      <Stack.Screen name="inscription" component={Inscription} />
+    </Stack.Navigator>
   );
 }
-export {Navigator};
+
+function TabNavigator() {
+  const navigation = useNavigation();
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: 'coral',
+        tabBarInactiveTintColor: 'gray',
+      }}>
+      <Tab.Screen
+        name="Recettes"
+        component={Navigator}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color}) => (
+            <Ionicons name="list" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Recette aléatoire"
+        component={MealPageComponent}
+        listeners={{
+          tabPress: async e => {
+            e.preventDefault();
+            navigation.navigate('mealDetail', {id: await loadRandomMealId()});
+          },
+        }}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color}) => (
+            <Ionicons name="shuffle-outline" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Nouvelle Recette"
+        component={NewRecipe}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color}) => (
+            <Ionicons name="camera-outline" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Mes recettes maison"
+        component={MyReceipeHomeMade}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color}) => (
+            <Ionicons name="restaurant-outline" color={color} size={26} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+export {Navigator, TabNavigator};

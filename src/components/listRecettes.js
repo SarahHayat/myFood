@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import React, { useEffect, useState, Component, useCallback } from 'react';
 import { Picker } from '@react-native-picker/picker';
+=======
+import React, {useEffect, useState, Component} from 'react';
+>>>>>>> 432ed7d3d7b023453a7d23668c681634a0e91c89
 import {
   StyleSheet,
   Text,
@@ -12,13 +16,17 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import DropDownPicker from 'react-native-dropdown-picker';
+<<<<<<< HEAD
 import { useNavigation } from '@react-navigation/native';
 import { get } from 'react-native/Libraries/Utilities/PixelRatio';
 import { TextInput } from 'react-native-gesture-handler';
+=======
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+>>>>>>> 432ed7d3d7b023453a7d23668c681634a0e91c89
 
-const listRecettes = () => {
+const ListRecettes = props => {
   const [isLoading, setLoading] = useState(true);
-  const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [category, setCategorys] = useState([]);
   const [pays, setPays] = useState([]);
@@ -36,11 +44,19 @@ const listRecettes = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
+<<<<<<< HEAD
     { label: 'Categories', value: 'Categories' },
     { label: 'Pays', value: 'Pays' },
     { label: 'Ingrédients', value: 'Ingrédients' },
     { label: 'Nom de la recette', value: 'Nom de la recette' },
+=======
+    {label: 'Categories', value: 'Categories'},
+    {label: 'Pays', value: 'Pays'},
+    {label: 'Ingrédients', value: 'Ingredients'},
+    {label: 'Nom de la recette', value: 'Nom de la recette'},
+>>>>>>> 432ed7d3d7b023453a7d23668c681634a0e91c89
   ]);
+  const navigation = useNavigation();
 
   const getRecettes = useCallback(async () => {
     const res = await axios({
@@ -280,15 +296,17 @@ const listRecettes = () => {
       <FlatList
         style={styles.flatListMeal}
         data={data.meals}
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <View>
-            <TouchableOpacity onPress={() => {
-              navigation.navigate('mealDetail', { id: item.idMeal });
-            }} style={styles.buttonMeal}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('mealDetail', {id: item.idMeal});
+              }}
+              style={styles.buttonMeal}>
               <Text style={styles.titleMeal}>{item.strMeal}</Text>
               <Image
-                source={{ uri: item.strMealThumb }}
-                style={{ width: 100, height: 100 }}
+                source={{uri: item.strMealThumb}}
+                style={{width: 100, height: 100}}
               />
               <Text>{'\n'}</Text>
             </TouchableOpacity>
@@ -350,4 +368,8 @@ const styles = StyleSheet.create({
   },
 });
 
+<<<<<<< HEAD
 export default listRecettes;
+=======
+export default ListRecettes;
+>>>>>>> 432ed7d3d7b023453a7d23668c681634a0e91c89
