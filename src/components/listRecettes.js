@@ -15,9 +15,9 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { useNavigation } from '@react-navigation/native';
 import { get } from 'react-native/Libraries/Utilities/PixelRatio';
 import { TextInput } from 'react-native-gesture-handler';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-const ListRecettes = props => {
+const ListRecettes = () => {
   const [data, setData] = useState([]);
   const [category, setCategorys] = useState([]);
   const [pays, setPays] = useState([]);
@@ -39,10 +39,6 @@ const ListRecettes = props => {
     { label: 'Pays', value: 'Pays' },
     { label: 'Ingrédients', value: 'Ingrédients' },
     { label: 'Nom de la recette', value: 'Nom de la recette' },
-    {label: 'Categories', value: 'Categories'},
-    {label: 'Pays', value: 'Pays'},
-    {label: 'Ingrédients', value: 'Ingredients'},
-    {label: 'Nom de la recette', value: 'Nom de la recette'},
   ]);
   const navigation = useNavigation();
 
@@ -224,7 +220,7 @@ const ListRecettes = props => {
         onChangeValue={bindFiltre}
       />
 
-<Text style={styles.titleValeur}>{searchText} :</Text>
+      <Text style={styles.titleValeur}>{searchText} :</Text>
 
       {showCat ? (
         <Picker
@@ -270,40 +266,40 @@ const ListRecettes = props => {
 
       {showFlatListRecipesFitered ? (
 
-      <FlatList
-        style={styles.flatListFiltered}
-        data={filteredDataSource}
-        keyExtractor={(item, index) => index.toString()}
-        ItemSeparatorComponent={ItemSeparatorView}
-        renderItem={ItemView}
-      />
-      ): null}      
+        <FlatList
+          style={styles.flatListFiltered}
+          data={filteredDataSource}
+          keyExtractor={(item, index) => index.toString()}
+          ItemSeparatorComponent={ItemSeparatorView}
+          renderItem={ItemView}
+        />
+      ) : null}
 
       {showFlatListRecipes ? (
 
-      <FlatList
-        style={styles.flatListMeal}
-        data={data.meals}
-        renderItem={({item}) => (
-          <View>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('mealDetail', {id: item.idMeal});
-              }}
-              style={styles.buttonMeal}>
-              <Text style={styles.titleMeal}>{item.strMeal}</Text>
-              <Image
-                source={{uri: item.strMealThumb}}
-                style={{width: 100, height: 100}}
-              />
+        <FlatList
+          style={styles.flatListMeal}
+          data={data.meals}
+          renderItem={({ item }) => (
+            <View>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('mealDetail', { id: item.idMeal });
+                }}
+                style={styles.buttonMeal}>
+                <Text style={styles.titleMeal}>{item.strMeal}</Text>
+                <Image
+                  source={{ uri: item.strMealThumb }}
+                  style={{ width: 100, height: 100 }}
+                />
+                <Text>{'\n'}</Text>
+              </TouchableOpacity>
               <Text>{'\n'}</Text>
-            </TouchableOpacity>
-            <Text>{'\n'}</Text>
-          </View>
-        )}
-        keyExtractor={(item, index) => index}
-      />
-      ): null}
+            </View>
+          )}
+          keyExtractor={(item, index) => index}
+        />
+      ) : null}
     </SafeAreaView>
   );
 };
@@ -314,7 +310,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     top: 10,
   },
-  flatListFiltered : {
+  flatListFiltered: {
     top: 35,
   },
 
