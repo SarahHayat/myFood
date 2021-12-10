@@ -177,7 +177,12 @@ const ListRecettes = (props) => {
     return (
       <View>
         <TouchableOpacity onPress={() => {
-          navigation.navigate('mealDetail', { id: item.idMeal });
+          navigation.navigate('mealDetail', {
+            data: {
+              isCustomMeal: false,
+              id: item.idMeal
+            }
+          });
         }} style={styles.buttonMeal}>
           <Text style={styles.titleMeal}>{item.strMeal}</Text>
           <Image
@@ -223,45 +228,45 @@ const ListRecettes = (props) => {
 
       {showCat ? (
         <View style={styles.viewPickerDdpResultFiltre}>
-        <Picker
-          mode="dialog"
-          style={styles.ddpResultFiltre}
-          selectedValue={selected}
-          onValueChange={(item) => {
-            setSelected(item); getRecettesByCategory(item)
-          }}>
-          {category.map((item) => {
-            return (<Picker.Item label={item.strCategory} value={item.strCategory} key={item.strCategory} />)
-          })}
-        </Picker>
+          <Picker
+            mode="dialog"
+            style={styles.ddpResultFiltre}
+            selectedValue={selected}
+            onValueChange={(item) => {
+              setSelected(item); getRecettesByCategory(item)
+            }}>
+            {category.map((item) => {
+              return (<Picker.Item label={item.strCategory} value={item.strCategory} key={item.strCategory} />)
+            })}
+          </Picker>
         </View>
       ) : null}
 
       {showPays ? (
         <View style={styles.viewPickerDdpResultFiltre}>
-        <Picker
-          mode="dialog"
-          style={styles.ddpResultFiltre}
-          selectedValue={selected}
-          onValueChange={(item) => { setSelected(item); getRecettesByArea(item) }}>
-          {pays.map((item) => {
-            return (<Picker.Item label={item.strArea} value={item.strArea} key={item.strArea} />)
-          })}
-        </Picker>
+          <Picker
+            mode="dialog"
+            style={styles.ddpResultFiltre}
+            selectedValue={selected}
+            onValueChange={(item) => { setSelected(item); getRecettesByArea(item) }}>
+            {pays.map((item) => {
+              return (<Picker.Item label={item.strArea} value={item.strArea} key={item.strArea} />)
+            })}
+          </Picker>
         </View>
       ) : null}
 
       {showIngredients ? (
         <View style={styles.viewPickerDdpResultFiltre}>
-        <Picker
-          mode="dialog"
-          selectedValue={selected}
-          style={styles.ddpResultFiltre}
-          onValueChange={(item) => { setSelected(item); getRecettesByIngredient(item) }}>
-          {ingredients.map((item) => {
-            return (<Picker.Item label={item.strIngredient} value={item.strIngredient} key={item.idIngredient} />)
-          })}
-        </Picker>
+          <Picker
+            mode="dialog"
+            selectedValue={selected}
+            style={styles.ddpResultFiltre}
+            onValueChange={(item) => { setSelected(item); getRecettesByIngredient(item) }}>
+            {ingredients.map((item) => {
+              return (<Picker.Item label={item.strIngredient} value={item.strIngredient} key={item.idIngredient} />)
+            })}
+          </Picker>
         </View>
       ) : null}
 
@@ -292,7 +297,12 @@ const ListRecettes = (props) => {
             <View style={styles.borderFlatListMeal}>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('mealDetail', { id: item.idMeal });
+                  navigation.navigate('mealDetail', {
+                    data: {
+                      isCustomMeal: false,
+                      id: item.idMeal
+                    }
+                  });
                 }}
                 style={styles.buttonMeal}>
                 <Text style={styles.titleMeal}>{item.strMeal}</Text>
@@ -306,32 +316,6 @@ const ListRecettes = (props) => {
           keyExtractor={(item, index) => index}
         />
       ) : null}
-
-      <FlatList
-        style={styles.flatListMeal}
-        data={data.meals}
-        renderItem={({item}) => (
-          <View>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('mealDetail', {data: {
-                  isCustomMeal: false,
-                    id: item.idMeal
-                  }});
-              }}
-              style={styles.buttonMeal}>
-              <Text style={styles.titleMeal}>{item.strMeal}</Text>
-              <Image
-                source={{uri: item.strMealThumb}}
-                style={{width: 100, height: 100}}
-              />
-              <Text>{'\n'}</Text>
-            </TouchableOpacity>
-            <Text>{'\n'}</Text>
-          </View>
-        )}
-        keyExtractor={(item, index) => index}
-      />
     </SafeAreaView>
   );
 };
@@ -356,7 +340,7 @@ const styles = StyleSheet.create({
     margin: 10,
     width: 200,
   },
-  bodyListMeals : {
+  bodyListMeals: {
     backgroundColor: '#e3d7d7',
   },
   titleFiltre: {
@@ -368,14 +352,14 @@ const styles = StyleSheet.create({
     top: "20%",
   },
 
-  ddpFiltrerPar : {
+  ddpFiltrerPar: {
     top: -10,
     marginLeft: 120,
     width: 200,
     height: 40,
   },
 
-  ddpResultFiltre : {
+  ddpResultFiltre: {
     width: 210,
     padding: 10,
     borderWidth: 1,
@@ -384,7 +368,7 @@ const styles = StyleSheet.create({
     marginLeft: -10,
   },
 
-  viewPickerDdpResultFiltre : {
+  viewPickerDdpResultFiltre: {
     width: 198,
     height: 35,
     top: -15,
@@ -395,11 +379,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
 
-  mealImage : {
-    width: 100, 
+  mealImage: {
+    width: 100,
     height: 100,
     margin: 0,
-    top:-10,
+    top: -10,
   },
 
   flatListMeal: {
