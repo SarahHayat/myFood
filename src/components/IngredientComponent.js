@@ -11,27 +11,39 @@ import IngredientComponentStyle from '../styles/IngredientComponentStyle';
 import axios from 'axios';
 
 const IngredientComponent = props => {
-    let ingredientImageUrl = '';
+  let ingredientImageUrl = '';
+  let titleIngredient = '';
 
-    if (!props.isCustomMeal) {
-        ingredientImageUrl = API_MEAL_INGREDIENT_IMAGE_URL + props.name.replace(/\s/g, '%20') + API_MEAL_INGREDIENT_IMAGE_EXTENSION;
-    }
+  if (!props.isCustomMeal) {
+    titleIngredient = props.name;
+    console.log('is not custom meal');
+    ingredientImageUrl =
+      // eslint-disable-next-line no-undef
+      API_MEAL_INGREDIENT_IMAGE_URL +
+      props.name.replace(/\s/g, '%20') +
+      // eslint-disable-next-line no-undef
+      API_MEAL_INGREDIENT_IMAGE_EXTENSION;
+  } else {
+    titleIngredient = props.name.title;
+  }
 
-    return (
-        <View key={props.index} style={IngredientComponentStyle.styles.ingredientView}>
-            <Text>{props.name}</Text>
-            {
-                props.isCustomMeal ? (
-                    <></>
-                ): (
-                    <Image source={{
-                        uri: ingredientImageUrl
-                    }}
-                           style={IngredientComponentStyle.styles.ingredientImage}/>
-                )
-            }
-        </View>
-    );
+  return (
+    <View
+      key={props.index}
+      style={IngredientComponentStyle.styles.ingredientView}>
+      <Text>{titleIngredient}</Text>
+      {props.isCustomMeal ? (
+        <></>
+      ) : (
+        <Image
+          source={{
+            uri: ingredientImageUrl,
+          }}
+          style={IngredientComponentStyle.styles.ingredientImage}
+        />
+      )}
+    </View>
+  );
 };
 
 export default IngredientComponent;

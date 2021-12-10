@@ -29,14 +29,12 @@ const NewRecipe = () => {
   const [title, setTitle] = useState(null);
   const [category, setCategory] = useState(null);
   const [origin, setOrigin] = useState(null);
-  const [ingredient, setIngredient] = useState();
-  const [instructions, setInstruction] = useState({});
+  const [ingredient, setIngredient] = useState('');
+  const [instructions, setInstruction] = useState('');
   const [error, setError] = useState(false);
 
   const receipes = useSelector(s => s.receipe.newReceipe);
   const ingredients = useSelector(s => s.receipe.ingredients);
-
-  console.log('ingrsient', ingredients);
 
   const dispatch = useDispatch();
 
@@ -60,7 +58,6 @@ const NewRecipe = () => {
     text => {
       dispatch({type: 'add', value: {title: text, id: Math.random()}});
       setIngredient('');
-      // setItem()
     },
     [dispatch],
   );
@@ -72,22 +69,13 @@ const NewRecipe = () => {
     [dispatch],
   );
   const addReceipe = useCallback(() => {
-    console.log(title);
     if (title === null) {
       setError(true);
       return;
     } else {
       setError(false);
     }
-    // let newReceipe = {
-    //   id: Math.random(),
-    //   name: title,
-    //   category: category,
-    //   origin: origin,
-    //   instructions: instructions,
-    //   imageUrl: file,
-    //   ingredients: ingredients,
-    // };
+
     dispatch({
       type: 'create',
       value: {
@@ -103,7 +91,7 @@ const NewRecipe = () => {
     dispatch({type: 'erase'});
     emptyAllInput();
     navigation.navigate('Mes recettes maison');
-  }, [dispatch, title, origin, category, instructions]);
+  }, [dispatch, title, origin, category, instructions, ingredients, file]);
 
   const requestCameraPermission = async () => {
     try {
@@ -227,7 +215,7 @@ const NewRecipe = () => {
           />
           <Text style={styles.labelInput}>Ingredients :</Text>
           <TextInput
-            style={[styles.input]}
+            style={styles.input}
             value={ingredient}
             onChangeText={setIngredient}
             placeholder={'Fromage, Pain ..'}
