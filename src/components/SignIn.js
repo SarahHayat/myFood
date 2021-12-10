@@ -11,20 +11,20 @@ import {
 } from 'react-native';
 import {styles} from '../styles/inscription';
 
-const Inscription = () => {
+const SignIn = () => {
   const navigation = useNavigation();
 
-  const user = useSelector(s => s.auth.user);
+  // const user = useSelector(s => s.auth.user);
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  const register = useCallback(async () => {
+  const signIn = useCallback(async () => {
     let values = {email: email, password: password};
-    const user = await registerUser(values);
-    dispatch({type: 'update', values: user});
-  }, [email, password]);
+    const myUser = await getSignIn(values);
+    dispatch({type: 'update', value: myUser});
+  }, [dispatch, email, password]);
 
   // const signIn = useCallback(async () => {
   //   await getSignIn();
@@ -32,7 +32,7 @@ const Inscription = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Text style={styles.title}>Inscription</Text>
+      <Text style={styles.title}>Connexion</Text>
       <View style={styles.container}>
         <Text style={styles.text}>Email</Text>
         <TextInput value={email} onChangeText={setEmail} style={styles.input} />
@@ -46,13 +46,20 @@ const Inscription = () => {
         <TouchableHighlight
           style={styles.button}
           onPress={async () => {
-            await register();
-            navigation.navigate('connexion');
+            await signIn();
           }}>
-          <Text style={styles.buttonText}>S'inscrire</Text>
+          <Text style={styles.buttonText}>Se connecter</Text>
         </TouchableHighlight>
       </View>
+      <Text>Vous n'avez pas de compte ?</Text>
+      <TouchableHighlight
+        style={styles.button}
+        onPress={async () => {
+          navigation.navigate('inscription');
+        }}>
+        <Text style={styles.buttonText}>S'inscire</Text>
+      </TouchableHighlight>
     </SafeAreaView>
   );
 };
-export {Inscription};
+export {SignIn};

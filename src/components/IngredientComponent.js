@@ -12,7 +12,6 @@ import axios from 'axios';
 
 const IngredientComponent = props => {
   let ingredientImageUrl = '';
-
   let titleIngredient = '';
 
   if (!props.isCustomMeal) {
@@ -31,8 +30,9 @@ const IngredientComponent = props => {
     <View
       key={props.index}
       style={IngredientComponentStyle.styles.ingredientView}>
-      <Text style={{color: 'black'}}>{titleIngredient}</Text>
-
+      <Text style={{color: 'black'}}>
+        {titleIngredient} {props.measure}
+      </Text>
       {props.isCustomMeal ? (
         <></>
       ) : (

@@ -42,7 +42,7 @@ const MealPageComponent = props => {
 
   const [meal, setMeal] = useState({});
   const [isFavorite, setIsFavorite] = useState();
-  const favorites = useSelector(s => s.favorite.favorite);
+  const favorites = useSelector(s => s.auth.favorite);
 
   const dispatch = useDispatch();
 
@@ -151,6 +151,7 @@ const MealPageComponent = props => {
             isCustomMeal={route.params.data.isCustomMeal}
             name={item}
             index={index}
+            measure={meal.measures[index]}
           />
         );
       }}
