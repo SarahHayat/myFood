@@ -23,10 +23,7 @@ const loadRandomMealId = async () => {
 };
 
 function Navigator() {
-  // const user = useSelector(s => s.auth.user);
-  // let user = null;
-  console.log('user ', user);
-  let user = 'user';
+  const user = useSelector(s => s.auth.user);
   return user ? (
     <Stack.Navigator
       initialRouteName="mealList"
@@ -70,10 +67,12 @@ function TabNavigator() {
         listeners={{
           tabPress: async e => {
             e.preventDefault();
-            navigation.navigate('mealDetail', {data: {
+            navigation.navigate('mealDetail', {
+              data: {
                 isCustomMeal: false,
-                    id: await loadRandomMealId()
-                }});
+                id: await loadRandomMealId(),
+              },
+            });
           },
         }}
         options={{

@@ -51,7 +51,6 @@ const MealPageComponent = props => {
   };
 
   useEffect(() => {
-    console.log(route.params.data);
     if (route.params.data.isCustomMeal) {
       setMeal(route.params.data.mealData);
     } else {

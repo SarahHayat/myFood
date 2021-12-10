@@ -329,7 +329,7 @@ PODS:
   - React-jsinspector (0.66.3)
   - React-logger (0.66.3):
     - glog
-  - react-native-image-picker (4.4.2):
+  - react-native-image-picker (4.5.0):
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
@@ -399,6 +399,8 @@ PODS:
     - React-logger (= 0.66.3)
     - React-perflogger (= 0.66.3)
   - RNCAsyncStorage (1.15.14):
+    - React-Core
+  - RNCPicker (2.2.1):
     - React-Core
   - RNFBApp (13.1.0):
     - Firebase/CoreOnly (= 8.10.0)
@@ -478,6 +480,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -580,6 +583,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNCPicker:
+    :path: "../node_modules/@react-native-picker/picker"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
@@ -638,7 +643,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 433a691aee158533a6a6ee9c86cb4a1684fa2853
   React-jsinspector: d9c8eb0b53f0da206fed56612b289fec84991157
   React-logger: e522e76fa3e9ec3e7d7115b49485cc065cf4ae06
-  react-native-image-picker: 6a18bc5c053ba096ec9b027bd497129cfda30e6b
+  react-native-image-picker: dcbfbdc26ce176e13b82a2bfada3786c7afa2307
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   React-perflogger: 73732888d37d4f5065198727b167846743232882
   React-RCTActionSheet: 96c6d774fa89b1f7c59fc460adc3245ba2d7fd79
@@ -653,6 +658,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: bbbdb3d8fcf327c6e2249ee71b6ef1764b7dc266
   ReactCommon: 9bac022ab71596f2b0fde1268272543184c63971
   RNCAsyncStorage: ea6b5c280997b2b32a587793163b1f10e580c4f7
+  RNCPicker: cb57c823d5ce8d2d0b5dfb45ad97b737260dc59e
   RNFBApp: 1d553b3f201e9aaeba03d777b1dea51eaacc24cc
   RNFBAuth: af8bef00241eaab1c1c06d9b942c133d8a5135a8
   RNGestureHandler: e5c7cab5f214503dcefd6b2b0cefb050e1f51c4a

@@ -2,8 +2,6 @@ import {firebase} from './firebase';
 
 async function getSignIn(values) {
   const data = {email: values.email, password: values.password};
-  console.log('data', data);
-  console.log('signIn');
   firebase
     .auth()
     .signInWithEmailAndPassword(data.email, data.password)
