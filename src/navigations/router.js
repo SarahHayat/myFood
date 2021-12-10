@@ -35,7 +35,6 @@ function Navigator() {
       <Stack.Screen
         name="mealDetail"
         component={MealPageComponent}
-        id={({params}) => params.id}
         data={({params}) => params.data}
       />
     </Stack.Navigator>
@@ -71,7 +70,10 @@ function TabNavigator() {
         listeners={{
           tabPress: async e => {
             e.preventDefault();
-            navigation.navigate('mealDetail', {id: await loadRandomMealId()});
+            navigation.navigate('mealDetail', {data: {
+                isCustomMeal: false,
+                    id: await loadRandomMealId()
+                }});
           },
         }}
         options={{

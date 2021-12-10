@@ -306,6 +306,32 @@ const ListRecettes = (props) => {
           keyExtractor={(item, index) => index}
         />
       ) : null}
+
+      <FlatList
+        style={styles.flatListMeal}
+        data={data.meals}
+        renderItem={({item}) => (
+          <View>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('mealDetail', {data: {
+                  isCustomMeal: false,
+                    id: item.idMeal
+                  }});
+              }}
+              style={styles.buttonMeal}>
+              <Text style={styles.titleMeal}>{item.strMeal}</Text>
+              <Image
+                source={{uri: item.strMealThumb}}
+                style={{width: 100, height: 100}}
+              />
+              <Text>{'\n'}</Text>
+            </TouchableOpacity>
+            <Text>{'\n'}</Text>
+          </View>
+        )}
+        keyExtractor={(item, index) => index}
+      />
     </SafeAreaView>
   );
 };
