@@ -18,7 +18,6 @@ import { TextInput } from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
 
 const ListRecettes = props => {
-  const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [category, setCategorys] = useState([]);
   const [pays, setPays] = useState([]);
