@@ -41,9 +41,7 @@ const MealPageComponent = props => {
   });
 
   const [meal, setMeal] = useState({});
-  const [isFavorite, setIsFavorite] = useState();
   const favorites = useSelector(s => s.auth.favorite);
-
   const dispatch = useDispatch();
 
   const loadMeal = async () => {

@@ -1,6 +1,6 @@
 const initialState = {
   user: null,
-  favorites: [],
+  favorite: [],
 };
 const getUser = (state, action) => {
   return {

@@ -1,5 +1,5 @@
-import React, { useEffect, useState, Component, useCallback } from 'react';
-import { Picker } from '@react-native-picker/picker';
+import React, {useEffect, useState, Component, useCallback} from 'react';
+import {Picker} from '@react-native-picker/picker';
 import {
   StyleSheet,
   Text,
@@ -12,12 +12,12 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { useNavigation } from '@react-navigation/native';
-import { get } from 'react-native/Libraries/Utilities/PixelRatio';
-import { TextInput } from 'react-native-gesture-handler';
-import { useDispatch, useSelector } from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import {get} from 'react-native/Libraries/Utilities/PixelRatio';
+import {TextInput} from 'react-native-gesture-handler';
+import {useDispatch, useSelector} from 'react-redux';
 
-const ListRecettes = (props) => {
+const ListRecettes = props => {
   const [data, setData] = useState([]);
   const [category, setCategorys] = useState([]);
   const [pays, setPays] = useState([]);
@@ -29,16 +29,17 @@ const ListRecettes = (props) => {
   const [showPays, setShowPays] = useState(false);
   const [showRecipe, setShowRecipe] = useState(false);
   const [showFlatListRecipes, setShowFlatListRecipes] = useState(true);
-  const [showFlatListRecipesFitered, setShowFlatListRecipesFitered] = useState(false);
+  const [showFlatListRecipesFitered, setShowFlatListRecipesFitered] =
+    useState(false);
   const [selected, setSelected] = useState('');
   const [searchText, setSearchText] = useState(null);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    { label: 'Categories', value: 'Categories' },
-    { label: 'Pays', value: 'Pays' },
-    { label: 'Ingrédients', value: 'Ingrédients' },
-    { label: 'Nom de la recette', value: 'Nom de la recette' },
+    {label: 'Categories', value: 'Categories'},
+    {label: 'Pays', value: 'Pays'},
+    {label: 'Ingrédients', value: 'Ingrédients'},
+    {label: 'Nom de la recette', value: 'Nom de la recette'},
   ]);
   const navigation = useNavigation();
 
@@ -51,7 +52,7 @@ const ListRecettes = (props) => {
     setData(res.data);
   }, []);
 
-  const getRecettesByCategory = useCallback(async (category) => {
+  const getRecettesByCategory = useCallback(async category => {
     const res = await axios({
       method: 'get',
       url: 'https://www.themealdb.com/api/json/v1/1/filter.php?c=' + category,
@@ -60,7 +61,7 @@ const ListRecettes = (props) => {
     setData(res.data);
   }, []);
 
-  const getRecettesByArea = useCallback(async (area) => {
+  const getRecettesByArea = useCallback(async area => {
     const res = await axios({
       method: 'get',
       url: 'https://www.themealdb.com/api/json/v1/1/filter.php?a=' + area,
@@ -69,7 +70,7 @@ const ListRecettes = (props) => {
     setData(res.data);
   }, []);
 
-  const getRecettesByIngredient = useCallback(async (ingredient) => {
+  const getRecettesByIngredient = useCallback(async ingredient => {
     const res = await axios({
       method: 'get',
       url: 'https://www.themealdb.com/api/json/v1/1/filter.php?i=' + ingredient,
@@ -112,8 +113,7 @@ const ListRecettes = (props) => {
     getIngredients();
   }, []);
 
-
-  const bindFiltre = (text) => {
+  const bindFiltre = text => {
     setSearchText(text + ' :');
     switch (text) {
       case 'Categories': {
@@ -153,18 +153,17 @@ const ListRecettes = (props) => {
         break;
       }
     }
-  }
+  };
 
-  const searchFilterFunction = (text) => {
+  const searchFilterFunction = text => {
     if (text) {
-      const newMeal = data.meals.filter(
-        function (item) {
-          const itemData = item.strMeal
-            ? item.strMeal.toUpperCase()
-            : ''.toUpperCase();
-          const textData = text.toUpperCase();
-          return itemData.indexOf(textData) > -1;
-        });
+      const newMeal = data.meals.filter(function (item) {
+        const itemData = item.strMeal
+          ? item.strMeal.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
       setFilteredDataSource(newMeal);
       setSearch(text);
     } else {
@@ -173,21 +172,23 @@ const ListRecettes = (props) => {
     }
   };
 
-  const ItemView = ({ item }) => {
+  const ItemView = ({item}) => {
     return (
       <View>
-        <TouchableOpacity onPress={() => {
-          navigation.navigate('mealDetail', {
-            data: {
-              isCustomMeal: false,
-              id: item.idMeal
-            }
-          });
-        }} style={styles.buttonMeal}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('mealDetail', {
+              data: {
+                isCustomMeal: false,
+                id: item.idMeal,
+              },
+            });
+          }}
+          style={styles.buttonMeal}>
           <Text style={styles.titleMeal}>{item.strMeal}</Text>
           <Image
-            source={{ uri: item.strMealThumb }}
-            style={{ width: 100, height: 100 }}
+            source={{uri: item.strMealThumb}}
+            style={{width: 100, height: 100}}
           />
           <Text>{'\n'}</Text>
         </TouchableOpacity>
@@ -232,11 +233,18 @@ const ListRecettes = (props) => {
             mode="dialog"
             style={styles.ddpResultFiltre}
             selectedValue={selected}
-            onValueChange={(item) => {
-              setSelected(item); getRecettesByCategory(item)
+            onValueChange={item => {
+              setSelected(item);
+              getRecettesByCategory(item);
             }}>
-            {category.map((item) => {
-              return (<Picker.Item label={item.strCategory} value={item.strCategory} key={item.strCategory} />)
+            {category.map(item => {
+              return (
+                <Picker.Item
+                  label={item.strCategory}
+                  value={item.strCategory}
+                  key={item.strCategory}
+                />
+              );
             })}
           </Picker>
         </View>
@@ -248,9 +256,18 @@ const ListRecettes = (props) => {
             mode="dialog"
             style={styles.ddpResultFiltre}
             selectedValue={selected}
-            onValueChange={(item) => { setSelected(item); getRecettesByArea(item) }}>
-            {pays.map((item) => {
-              return (<Picker.Item label={item.strArea} value={item.strArea} key={item.strArea} />)
+            onValueChange={item => {
+              setSelected(item);
+              getRecettesByArea(item);
+            }}>
+            {pays.map(item => {
+              return (
+                <Picker.Item
+                  label={item.strArea}
+                  value={item.strArea}
+                  key={item.strArea}
+                />
+              );
             })}
           </Picker>
         </View>
@@ -262,23 +279,32 @@ const ListRecettes = (props) => {
             mode="dialog"
             selectedValue={selected}
             style={styles.ddpResultFiltre}
-            onValueChange={(item) => { setSelected(item); getRecettesByIngredient(item) }}>
-            {ingredients.map((item) => {
-              return (<Picker.Item label={item.strIngredient} value={item.strIngredient} key={item.idIngredient} />)
+            onValueChange={item => {
+              setSelected(item);
+              getRecettesByIngredient(item);
+            }}>
+            {ingredients.map(item => {
+              return (
+                <Picker.Item
+                  label={item.strIngredient}
+                  value={item.strIngredient}
+                  key={item.idIngredient}
+                />
+              );
             })}
           </Picker>
         </View>
       ) : null}
 
       {showRecipe ? (
-        <TextInput style={styles.textNameRecipe} onChangeText={(text) => searchFilterFunction(text)}
-          value={search}>
-
-        </TextInput>
+        <TextInput
+          style={styles.textNameRecipe}
+          onChangeText={text => searchFilterFunction(text)}
+          value={search}
+        />
       ) : null}
 
       {showFlatListRecipesFitered ? (
-
         <FlatList
           style={styles.flatListFiltered}
           data={filteredDataSource}
@@ -289,25 +315,24 @@ const ListRecettes = (props) => {
       ) : null}
 
       {showFlatListRecipes ? (
-
         <FlatList
           style={styles.flatListMeal}
           data={data.meals}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <View style={styles.borderFlatListMeal}>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate('mealDetail', {
                     data: {
                       isCustomMeal: false,
-                      id: item.idMeal
-                    }
+                      id: item.idMeal,
+                    },
                   });
                 }}
                 style={styles.buttonMeal}>
                 <Text style={styles.titleMeal}>{item.strMeal}</Text>
                 <Image
-                  source={{ uri: item.strMealThumb }}
+                  source={{uri: item.strMealThumb}}
                   style={styles.mealImage}
                 />
               </TouchableOpacity>
@@ -332,7 +357,7 @@ const styles = StyleSheet.create({
 
   textNameRecipe: {
     borderWidth: 1,
-    borderColor: "#777",
+    borderColor: '#777',
     padding: 8,
     top: 10,
     marginLeft: 'auto',
@@ -349,7 +374,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   filtreResult: {
-    top: "20%",
+    top: '20%',
   },
 
   ddpFiltrerPar: {
