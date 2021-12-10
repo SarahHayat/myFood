@@ -1,5 +1,5 @@
-import React, {useEffect, useState, Component, useCallback} from 'react';
-import {Picker} from '@react-native-picker/picker';
+import React, { useEffect, useState, Component, useCallback } from 'react';
+import { Picker } from '@react-native-picker/picker';
 import {
   StyleSheet,
   Text,
@@ -12,12 +12,13 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {useNavigation} from '@react-navigation/native';
-import {get} from 'react-native/Libraries/Utilities/PixelRatio';
-import {TextInput} from 'react-native-gesture-handler';
-import {useDispatch, useSelector} from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { get } from 'react-native/Libraries/Utilities/PixelRatio';
+import { TextInput } from 'react-native-gesture-handler';
+import { useDispatch, useSelector } from 'react-redux';
+import { ListMealsStyles } from '../styles/listMeals';
 
-const ListRecettes = props => {
+const ListRecettes = (props) => {
   const [data, setData] = useState([]);
   const [category, setCategorys] = useState([]);
   const [pays, setPays] = useState([]);
@@ -29,17 +30,16 @@ const ListRecettes = props => {
   const [showPays, setShowPays] = useState(false);
   const [showRecipe, setShowRecipe] = useState(false);
   const [showFlatListRecipes, setShowFlatListRecipes] = useState(true);
-  const [showFlatListRecipesFitered, setShowFlatListRecipesFitered] =
-    useState(false);
+  const [showFlatListRecipesFitered, setShowFlatListRecipesFitered] = useState(false);
   const [selected, setSelected] = useState('');
   const [searchText, setSearchText] = useState(null);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    {label: 'Categories', value: 'Categories'},
-    {label: 'Pays', value: 'Pays'},
-    {label: 'Ingrédients', value: 'Ingrédients'},
-    {label: 'Nom de la recette', value: 'Nom de la recette'},
+    { label: 'Categories', value: 'Categories' },
+    { label: 'Pays', value: 'Pays' },
+    { label: 'Ingrédients', value: 'Ingrédients' },
+    { label: 'Nom de la recette', value: 'Nom de la recette' },
   ]);
   const navigation = useNavigation();
 
@@ -52,7 +52,7 @@ const ListRecettes = props => {
     setData(res.data);
   }, []);
 
-  const getRecettesByCategory = useCallback(async category => {
+  const getRecettesByCategory = useCallback(async (category) => {
     const res = await axios({
       method: 'get',
       url: 'https://www.themealdb.com/api/json/v1/1/filter.php?c=' + category,
@@ -61,7 +61,7 @@ const ListRecettes = props => {
     setData(res.data);
   }, []);
 
-  const getRecettesByArea = useCallback(async area => {
+  const getRecettesByArea = useCallback(async (area) => {
     const res = await axios({
       method: 'get',
       url: 'https://www.themealdb.com/api/json/v1/1/filter.php?a=' + area,
@@ -70,7 +70,7 @@ const ListRecettes = props => {
     setData(res.data);
   }, []);
 
-  const getRecettesByIngredient = useCallback(async ingredient => {
+  const getRecettesByIngredient = useCallback(async (ingredient) => {
     const res = await axios({
       method: 'get',
       url: 'https://www.themealdb.com/api/json/v1/1/filter.php?i=' + ingredient,
@@ -113,7 +113,7 @@ const ListRecettes = props => {
     getIngredients();
   }, []);
 
-  const bindFiltre = text => {
+  const bindFiltre = (text) => {
     setSearchText(text + ' :');
     switch (text) {
       case 'Categories': {
@@ -153,17 +153,18 @@ const ListRecettes = props => {
         break;
       }
     }
-  };
+  }
 
-  const searchFilterFunction = text => {
+  const searchFilterFunction = (text) => {
     if (text) {
-      const newMeal = data.meals.filter(function (item) {
-        const itemData = item.strMeal
-          ? item.strMeal.toUpperCase()
-          : ''.toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-      });
+      const newMeal = data.meals.filter(
+        function (item) {
+          const itemData = item.strMeal
+            ? item.strMeal.toUpperCase()
+            : ''.toUpperCase();
+          const textData = text.toUpperCase();
+          return itemData.indexOf(textData) > -1;
+        });
       setFilteredDataSource(newMeal);
       setSearch(text);
     } else {
@@ -172,23 +173,21 @@ const ListRecettes = props => {
     }
   };
 
-  const ItemView = ({item}) => {
+  const ItemView = ({ item }) => {
     return (
       <View>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('mealDetail', {
-              data: {
-                isCustomMeal: false,
-                id: item.idMeal,
-              },
-            });
-          }}
-          style={styles.buttonMeal}>
-          <Text style={styles.titleMeal}>{item.strMeal}</Text>
+        <TouchableOpacity onPress={() => {
+          navigation.navigate('mealDetail', {
+            data: {
+              isCustomMeal: false,
+              id: item.idMeal
+            }
+          });
+        }} style={ListMealsStyles.buttonMeal}>
+          <Text style={ListMealsStyles.titleMeal}>{item.strMeal}</Text>
           <Image
-            source={{uri: item.strMealThumb}}
-            style={{width: 100, height: 100}}
+            source={{ uri: item.strMealThumb }}
+            style={{ width: 100, height: 100 }}
           />
           <Text>{'\n'}</Text>
         </TouchableOpacity>
@@ -210,13 +209,13 @@ const ListRecettes = props => {
   };
 
   return (
-    <SafeAreaView style={styles.bodyListMeals}>
-      <Text style={styles.titleFiltre}>Filtrer par : </Text>
+    <SafeAreaView style={ListMealsStyles.bodyListMeals}>
+      <Text style={ListMealsStyles.titleFiltre}>Filtrer par : </Text>
 
       <DropDownPicker
         open={open}
         value={value}
-        style={styles.ddpFiltrerPar}
+        style={ListMealsStyles.ddpFiltrerPar}
         listMode="MODAL"
         items={items}
         setOpen={setOpen}
@@ -225,88 +224,63 @@ const ListRecettes = props => {
         onChangeValue={bindFiltre}
       />
 
-      <Text style={styles.titleValeur}>{searchText} </Text>
+      <Text style={ListMealsStyles.titleValeur}>{searchText} </Text>
 
       {showCat ? (
-        <View style={styles.viewPickerDdpResultFiltre}>
+        <View style={ListMealsStyles.viewPickerDdpResultFiltre}>
           <Picker
             mode="dialog"
-            style={styles.ddpResultFiltre}
+            style={ListMealsStyles.ddpResultFiltre}
             selectedValue={selected}
-            onValueChange={item => {
-              setSelected(item);
-              getRecettesByCategory(item);
+            onValueChange={(item) => {
+              setSelected(item); getRecettesByCategory(item)
             }}>
-            {category.map(item => {
-              return (
-                <Picker.Item
-                  label={item.strCategory}
-                  value={item.strCategory}
-                  key={item.strCategory}
-                />
-              );
+            {category.map((item) => {
+              return (<Picker.Item label={item.strCategory} value={item.strCategory} key={item.strCategory} />)
             })}
           </Picker>
         </View>
       ) : null}
 
       {showPays ? (
-        <View style={styles.viewPickerDdpResultFiltre}>
+        <View style={ListMealsStyles.viewPickerDdpResultFiltre}>
           <Picker
             mode="dialog"
-            style={styles.ddpResultFiltre}
+            style={ListMealsStyles.ddpResultFiltre}
             selectedValue={selected}
-            onValueChange={item => {
-              setSelected(item);
-              getRecettesByArea(item);
-            }}>
-            {pays.map(item => {
-              return (
-                <Picker.Item
-                  label={item.strArea}
-                  value={item.strArea}
-                  key={item.strArea}
-                />
-              );
+            onValueChange={(item) => { setSelected(item); getRecettesByArea(item) }}>
+            {pays.map((item) => {
+              return (<Picker.Item label={item.strArea} value={item.strArea} key={item.strArea} />)
             })}
           </Picker>
         </View>
       ) : null}
 
       {showIngredients ? (
-        <View style={styles.viewPickerDdpResultFiltre}>
+        <View style={ListMealsStyles.viewPickerDdpResultFiltre}>
           <Picker
             mode="dialog"
             selectedValue={selected}
-            style={styles.ddpResultFiltre}
-            onValueChange={item => {
-              setSelected(item);
-              getRecettesByIngredient(item);
-            }}>
-            {ingredients.map(item => {
-              return (
-                <Picker.Item
-                  label={item.strIngredient}
-                  value={item.strIngredient}
-                  key={item.idIngredient}
-                />
-              );
+            style={ListMealsStyles.ddpResultFiltre}
+            onValueChange={(item) => { setSelected(item); getRecettesByIngredient(item) }}>
+            {ingredients.map((item) => {
+              return (<Picker.Item label={item.strIngredient} value={item.strIngredient} key={item.idIngredient} />)
             })}
           </Picker>
         </View>
       ) : null}
 
       {showRecipe ? (
-        <TextInput
-          style={styles.textNameRecipe}
-          onChangeText={text => searchFilterFunction(text)}
-          value={search}
-        />
+        <TextInput style={ListMealsStyles.textNameRecipe} onChangeText={(text) => searchFilterFunction(text)}
+          value={search}>
+
+        </TextInput>
       ) : null}
 
       {showFlatListRecipesFitered ? (
+
         <FlatList
-          style={styles.flatListFiltered}
+          style={ListMealsStyles.flatListFiltered}
           data={filteredDataSource}
           keyExtractor={(item, index) => index.toString()}
           ItemSeparatorComponent={ItemSeparatorView}
@@ -315,25 +289,26 @@ const ListRecettes = props => {
       ) : null}
 
       {showFlatListRecipes ? (
+
         <FlatList
-          style={styles.flatListMeal}
+          style={ListMealsStyles.flatListMeal}
           data={data.meals}
-          renderItem={({item}) => (
-            <View style={styles.borderFlatListMeal}>
+          renderItem={({ item }) => (
+            <View style={ListMealsStyles.borderFlatListMeal}>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate('mealDetail', {
                     data: {
                       isCustomMeal: false,
-                      id: item.idMeal,
-                    },
+                      id: item.idMeal
+                    }
                   });
                 }}
-                style={styles.buttonMeal}>
-                <Text style={styles.titleMeal}>{item.strMeal}</Text>
+                style={ListMealsStyles.buttonMeal}>
+                <Text style={ListMealsStyles.titleMeal}>{item.strMeal}</Text>
                 <Image
-                  source={{uri: item.strMealThumb}}
-                  style={styles.mealImage}
+                  source={{ uri: item.strMealThumb }}
+                  style={ListMealsStyles.mealImage}
                 />
               </TouchableOpacity>
             </View>
@@ -344,98 +319,5 @@ const ListRecettes = props => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  titleValeur: {
-    fontSize: 20,
-    marginLeft: 10,
-    top: 15,
-  },
-  flatListFiltered: {
-    top: 35,
-  },
-
-  textNameRecipe: {
-    borderWidth: 1,
-    borderColor: '#777',
-    padding: 8,
-    top: 10,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    margin: 10,
-    width: 200,
-  },
-  bodyListMeals: {
-    backgroundColor: '#e3d7d7',
-  },
-  titleFiltre: {
-    fontSize: 20,
-    top: 25,
-    marginLeft: 10,
-  },
-  filtreResult: {
-    top: '20%',
-  },
-
-  ddpFiltrerPar: {
-    top: -10,
-    marginLeft: 120,
-    width: 200,
-    height: 40,
-  },
-
-  ddpResultFiltre: {
-    width: 210,
-    padding: 10,
-    borderWidth: 1,
-    top: -10,
-    borderColor: 'black',
-    marginLeft: -10,
-  },
-
-  viewPickerDdpResultFiltre: {
-    width: 198,
-    height: 35,
-    top: -15,
-    marginLeft: 123,
-    borderColor: 'black',
-    borderWidth: 1,
-    borderRadius: 7,
-    backgroundColor: 'white',
-  },
-
-  mealImage: {
-    width: 100,
-    height: 100,
-    margin: 0,
-    top: -10,
-  },
-
-  flatListMeal: {
-    top: 10,
-  },
-  buttonMeal: {
-    borderRadius: 20,
-    padding: 10,
-    paddingTop: 0,
-    paddingBottom: 0,
-    backgroundColor: 'white',
-    marginBottom: 15,
-    borderTopLeftRadius: 0,
-  },
-
-  titleMeal: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginLeft: '35%',
-    top: '40%',
-  },
-  stretch: {
-    width: 50,
-    height: 100,
-    resizeMode: 'stretch',
-  },
-});
 
 export default ListRecettes;
