@@ -17,7 +17,7 @@ import { get } from 'react-native/Libraries/Utilities/PixelRatio';
 import { TextInput } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 
-const ListRecettes = () => {
+const ListRecettes = (props) => {
   const [data, setData] = useState([]);
   const [category, setCategorys] = useState([]);
   const [pays, setPays] = useState([]);
@@ -114,7 +114,7 @@ const ListRecettes = () => {
 
 
   const bindFiltre = (text) => {
-    setSearchText(text);
+    setSearchText(text + ' :');
     switch (text) {
       case 'Categories': {
         setShowPays(false);
@@ -204,14 +204,13 @@ const ListRecettes = () => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.bodyListMeals}>
       <Text style={styles.titleFiltre}>Filtrer par : </Text>
-      <Text>{'\n'}</Text>
-
 
       <DropDownPicker
         open={open}
         value={value}
+        style={styles.ddpFiltrerPar}
         listMode="MODAL"
         items={items}
         setOpen={setOpen}
@@ -220,11 +219,13 @@ const ListRecettes = () => {
         onChangeValue={bindFiltre}
       />
 
-      <Text style={styles.titleValeur}>{searchText} :</Text>
+      <Text style={styles.titleValeur}>{searchText} </Text>
 
       {showCat ? (
+        <View style={styles.viewPickerDdpResultFiltre}>
         <Picker
           mode="dialog"
+          style={styles.ddpResultFiltre}
           selectedValue={selected}
           onValueChange={(item) => {
             setSelected(item); getRecettesByCategory(item)
@@ -233,28 +234,35 @@ const ListRecettes = () => {
             return (<Picker.Item label={item.strCategory} value={item.strCategory} key={item.strCategory} />)
           })}
         </Picker>
+        </View>
       ) : null}
 
       {showPays ? (
+        <View style={styles.viewPickerDdpResultFiltre}>
         <Picker
           mode="dialog"
+          style={styles.ddpResultFiltre}
           selectedValue={selected}
           onValueChange={(item) => { setSelected(item); getRecettesByArea(item) }}>
           {pays.map((item) => {
             return (<Picker.Item label={item.strArea} value={item.strArea} key={item.strArea} />)
           })}
         </Picker>
+        </View>
       ) : null}
 
       {showIngredients ? (
+        <View style={styles.viewPickerDdpResultFiltre}>
         <Picker
           mode="dialog"
           selectedValue={selected}
+          style={styles.ddpResultFiltre}
           onValueChange={(item) => { setSelected(item); getRecettesByIngredient(item) }}>
           {ingredients.map((item) => {
             return (<Picker.Item label={item.strIngredient} value={item.strIngredient} key={item.idIngredient} />)
           })}
         </Picker>
+        </View>
       ) : null}
 
       {showRecipe ? (
@@ -281,7 +289,7 @@ const ListRecettes = () => {
           style={styles.flatListMeal}
           data={data.meals}
           renderItem={({ item }) => (
-            <View>
+            <View style={styles.borderFlatListMeal}>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate('mealDetail', { id: item.idMeal });
@@ -290,11 +298,9 @@ const ListRecettes = () => {
                 <Text style={styles.titleMeal}>{item.strMeal}</Text>
                 <Image
                   source={{ uri: item.strMealThumb }}
-                  style={{ width: 100, height: 100 }}
+                  style={styles.mealImage}
                 />
-                <Text>{'\n'}</Text>
               </TouchableOpacity>
-              <Text>{'\n'}</Text>
             </View>
           )}
           keyExtractor={(item, index) => index}
@@ -307,8 +313,8 @@ const ListRecettes = () => {
 const styles = StyleSheet.create({
   titleValeur: {
     fontSize: 20,
-    textAlign: 'center',
-    top: 10,
+    marginLeft: 10,
+    top: 15,
   },
   flatListFiltered: {
     top: 35,
@@ -324,24 +330,69 @@ const styles = StyleSheet.create({
     margin: 10,
     width: 200,
   },
+  bodyListMeals : {
+    backgroundColor: '#e3d7d7',
+  },
   titleFiltre: {
     fontSize: 20,
-    top: 10,
-    textAlign: 'center',
+    top: 25,
+    marginLeft: 10,
   },
   filtreResult: {
     top: "20%",
+  },
+
+  ddpFiltrerPar : {
+    top: -10,
+    marginLeft: 120,
+    width: 200,
+    height: 40,
+  },
+
+  ddpResultFiltre : {
+    width: 210,
+    padding: 10,
+    borderWidth: 1,
+    top: -10,
+    borderColor: 'black',
+    marginLeft: -10,
+  },
+
+  viewPickerDdpResultFiltre : {
+    width: 198,
+    height: 35,
+    top: -15,
+    marginLeft: 123,
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 7,
+    backgroundColor: 'white',
+  },
+
+  mealImage : {
+    width: 100, 
+    height: 100,
+    margin: 0,
+    top:-10,
   },
 
   flatListMeal: {
     top: 10,
   },
   buttonMeal: {
-    backgroundColor: '#dedede',
+    borderRadius: 20,
+    padding: 10,
+    paddingTop: 0,
+    paddingBottom: 0,
+    backgroundColor: 'white',
+    marginBottom: 15,
+    borderTopLeftRadius: 0,
   },
+
   titleMeal: {
-    color: 'red',
+    color: 'black',
     fontWeight: 'bold',
+    fontSize: 16,
     marginLeft: '35%',
     top: '40%',
   },
