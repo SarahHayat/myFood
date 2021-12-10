@@ -12,12 +12,10 @@ import axios from 'axios';
 
 const IngredientComponent = props => {
   let ingredientImageUrl = '';
-
   let titleIngredient = '';
 
   if (!props.isCustomMeal) {
     titleIngredient = props.name;
-    console.log('is not custom meal');
     ingredientImageUrl =
       // eslint-disable-next-line no-undef
       API_MEAL_INGREDIENT_IMAGE_URL +
@@ -32,8 +30,9 @@ const IngredientComponent = props => {
     <View
       key={props.index}
       style={IngredientComponentStyle.styles.ingredientView}>
-      <Text style={{color: 'black'}}>{titleIngredient}</Text>
-
+      <Text style={{color: 'black'}}>
+        {titleIngredient} {props.measure}
+      </Text>
       {props.isCustomMeal ? (
         <></>
       ) : (

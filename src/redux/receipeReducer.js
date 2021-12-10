@@ -7,6 +7,7 @@ const initialState = {
       origin: 'origin',
       instructions: 'instructions',
       imageUrl: 'file',
+      measures: [],
       ingredients: [],
     },
   ],

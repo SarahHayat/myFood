@@ -22,7 +22,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import IngredientListItems from './IngredientListItems';
-import {Picker} from "@react-native-picker/picker";
+import {Picker} from '@react-native-picker/picker';
 
 const NewRecipe = () => {
   const [file, setFile] = useState(null);
@@ -86,6 +86,7 @@ const NewRecipe = () => {
         instructions: instructions,
         imageUrl: file,
         ingredients: ingredients,
+        measures: [],
       },
     });
     dispatch({type: 'erase'});
@@ -194,15 +195,12 @@ const NewRecipe = () => {
           <Text style={styles.labelInput}>Origine :</Text>
 
           <Picker
-              selectedValue={origin}
-              onValueChange={(itemValue, itemIndex) =>
-                  setOrigin(itemValue)
-              }>
-            {
-              Object.keys(API_FLAG_CONVERT).map(value => (
-                  <Picker.Item label={value} value={value} />
-              ))
-            }
+            selectedValue={origin}
+            onValueChange={(itemValue, itemIndex) => setOrigin(itemValue)}>
+            {/* eslint-disable-next-line no-undef */}
+            {Object.keys(API_FLAG_CONVERT).map(value => (
+              <Picker.Item label={value} value={value} key={value} />
+            ))}
           </Picker>
           <Text style={styles.labelInput}>Instructions :</Text>
           <TextInput

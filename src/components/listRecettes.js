@@ -1,5 +1,5 @@
-import React, { useEffect, useState, Component, useCallback } from 'react';
-import { Picker } from '@react-native-picker/picker';
+import React, {useEffect, useState, Component, useCallback} from 'react';
+import {Picker} from '@react-native-picker/picker';
 import {
   StyleSheet,
   Text,
@@ -18,7 +18,8 @@ import { TextInput } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import {ListMealsStyles} from '../styles/listMeals';
 
-const ListRecettes = (props) => {
+
+const ListRecettes = props => {
   const [data, setData] = useState([]);
   const [category, setCategorys] = useState([]);
   const [pays, setPays] = useState([]);
@@ -30,16 +31,17 @@ const ListRecettes = (props) => {
   const [showPays, setShowPays] = useState(false);
   const [showRecipe, setShowRecipe] = useState(false);
   const [showFlatListRecipes, setShowFlatListRecipes] = useState(true);
-  const [showFlatListRecipesFitered, setShowFlatListRecipesFitered] = useState(false);
+  const [showFlatListRecipesFitered, setShowFlatListRecipesFitered] =
+    useState(false);
   const [selected, setSelected] = useState('');
   const [searchText, setSearchText] = useState(null);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    { label: 'Categories', value: 'Categories' },
-    { label: 'Pays', value: 'Pays' },
-    { label: 'Ingrédients', value: 'Ingrédients' },
-    { label: 'Nom de la recette', value: 'Nom de la recette' },
+    {label: 'Categories', value: 'Categories'},
+    {label: 'Pays', value: 'Pays'},
+    {label: 'Ingrédients', value: 'Ingrédients'},
+    {label: 'Nom de la recette', value: 'Nom de la recette'},
   ]);
   const navigation = useNavigation();
 
@@ -52,7 +54,7 @@ const ListRecettes = (props) => {
     setData(res.data);
   }, []);
 
-  const getRecettesByCategory = useCallback(async (category) => {
+  const getRecettesByCategory = useCallback(async category => {
     const res = await axios({
       method: 'get',
       url: 'https://www.themealdb.com/api/json/v1/1/filter.php?c=' + category,
@@ -61,7 +63,7 @@ const ListRecettes = (props) => {
     setData(res.data);
   }, []);
 
-  const getRecettesByArea = useCallback(async (area) => {
+  const getRecettesByArea = useCallback(async area => {
     const res = await axios({
       method: 'get',
       url: 'https://www.themealdb.com/api/json/v1/1/filter.php?a=' + area,
@@ -70,7 +72,7 @@ const ListRecettes = (props) => {
     setData(res.data);
   }, []);
 
-  const getRecettesByIngredient = useCallback(async (ingredient) => {
+  const getRecettesByIngredient = useCallback(async ingredient => {
     const res = await axios({
       method: 'get',
       url: 'https://www.themealdb.com/api/json/v1/1/filter.php?i=' + ingredient,
@@ -113,8 +115,7 @@ const ListRecettes = (props) => {
     getIngredients();
   }, []);
 
-
-  const bindFiltre = (text) => {
+  const bindFiltre = text => {
     setSearchText(text + ' :');
     switch (text) {
       case 'Categories': {
@@ -154,18 +155,17 @@ const ListRecettes = (props) => {
         break;
       }
     }
-  }
+  };
 
-  const searchFilterFunction = (text) => {
+  const searchFilterFunction = text => {
     if (text) {
-      const newMeal = data.meals.filter(
-        function (item) {
-          const itemData = item.strMeal
-            ? item.strMeal.toUpperCase()
-            : ''.toUpperCase();
-          const textData = text.toUpperCase();
-          return itemData.indexOf(textData) > -1;
-        });
+      const newMeal = data.meals.filter(function (item) {
+        const itemData = item.strMeal
+          ? item.strMeal.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
       setFilteredDataSource(newMeal);
       setSearch(text);
     } else {
@@ -174,7 +174,7 @@ const ListRecettes = (props) => {
     }
   };
 
-  const ItemView = ({ item }) => {
+  const ItemView = ({item}) => {
     return (
       <View>
         <TouchableOpacity onPress={() => {
@@ -187,8 +187,8 @@ const ListRecettes = (props) => {
         }} style={ListMealsStyles.buttonMeal}>
           <Text style={ListMealsStyles.titleMeal}>{item.strMeal}</Text>
           <Image
-            source={{ uri: item.strMealThumb }}
-            style={{ width: 100, height: 100 }}
+            source={{uri: item.strMealThumb}}
+            style={{width: 100, height: 100}}
           />
           <Text>{'\n'}</Text>
         </TouchableOpacity>
@@ -233,11 +233,18 @@ const ListRecettes = (props) => {
             mode="dialog"
             style={ListMealsStyles.ddpResultFiltre}
             selectedValue={selected}
-            onValueChange={(item) => {
-              setSelected(item); getRecettesByCategory(item)
+            onValueChange={item => {
+              setSelected(item);
+              getRecettesByCategory(item);
             }}>
-            {category.map((item) => {
-              return (<Picker.Item label={item.strCategory} value={item.strCategory} key={item.strCategory} />)
+            {category.map(item => {
+              return (
+                <Picker.Item
+                  label={item.strCategory}
+                  value={item.strCategory}
+                  key={item.strCategory}
+                />
+              );
             })}
           </Picker>
         </View>
@@ -249,9 +256,18 @@ const ListRecettes = (props) => {
             mode="dialog"
             style={ListMealsStyles.ddpResultFiltre}
             selectedValue={selected}
-            onValueChange={(item) => { setSelected(item); getRecettesByArea(item) }}>
-            {pays.map((item) => {
-              return (<Picker.Item label={item.strArea} value={item.strArea} key={item.strArea} />)
+            onValueChange={item => {
+              setSelected(item);
+              getRecettesByArea(item);
+            }}>
+            {pays.map(item => {
+              return (
+                <Picker.Item
+                  label={item.strArea}
+                  value={item.strArea}
+                  key={item.strArea}
+                />
+              );
             })}
           </Picker>
         </View>
@@ -266,6 +282,7 @@ const ListRecettes = (props) => {
             onValueChange={(item) => { setSelected(item); getRecettesByIngredient(item) }}>
             {ingredients.map((item) => {
               return (<Picker.Item label={item.strIngredient} value={item.strIngredient} key={item.idIngredient} />)
+
             })}
           </Picker>
         </View>
@@ -279,7 +296,6 @@ const ListRecettes = (props) => {
       ) : null}
 
       {showFlatListRecipesFitered ? (
-
         <FlatList
           style={ListMealsStyles.flatListFiltered}
           data={filteredDataSource}
@@ -290,7 +306,6 @@ const ListRecettes = (props) => {
       ) : null}
 
       {showFlatListRecipes ? (
-
         <FlatList
           style={ListMealsStyles.flatListMeal}
           data={data.meals}
@@ -301,8 +316,8 @@ const ListRecettes = (props) => {
                   navigation.navigate('mealDetail', {
                     data: {
                       isCustomMeal: false,
-                      id: item.idMeal
-                    }
+                      id: item.idMeal,
+                    },
                   });
                 }}
                 style={ListMealsStyles.buttonMeal}>
