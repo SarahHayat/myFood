@@ -20,7 +20,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
 
 const MealPageComponent = props => {
-  const {route} = props;
+  // const navigation = useNavigation();
+  const {route, navigation} = props;
   const styles = StyleSheet.create({
     screen: {
       flex: 1,
@@ -30,13 +31,11 @@ const MealPageComponent = props => {
       width: 300,
       height: 300,
     },
-    flagImage: {
-      height: 54,
-      width: 80,
-    },
   });
 
   const [meal, setMeal] = useState({});
+  const [favorite, setfavorite] = useState([]);
+  const [nameIcon, setNameIcon] = useState('heart-o');
   const [isFavorite, setIsFavorite] = useState();
   const [toAdd, setToAdd] = useState();
   // const [nameIcon, setNameIcon] = useState('heart-o');
