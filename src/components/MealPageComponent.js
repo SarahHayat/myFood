@@ -34,8 +34,9 @@ const MealPageComponent = props => {
       height: 300,
     },
     flagImage: {
-      height: 54,
-      width: 80,
+      height: 44,
+      width: 72,
+      marginRight: 25,
     },
   });
 
@@ -69,39 +70,75 @@ const MealPageComponent = props => {
   return (
     <FlatList
       ListHeaderComponent={() => (
-        <View style={{flex: 1, alignSelf: 'center'}}>
-          <Text>
-            {meal.name} | {meal.category}
-          </Text>
-          <Text>{meal.origin}</Text>
-
-            <Image source={{
-                uri: API_FLAG_URL + API_FLAG_CONVERT[`${meal.origin}`] + API_FLAG_IMAGE_EXTENSION
-            }}
-                   style={styles.flagImage}/>
-
-            <Image
+        <View
+          style={{
+            flex: 1,
+            alignSelf: 'center',
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginBottom: 8,
+              marginTop: 10,
+            }}>
+            {route.params.data.isCustomMeal ? (
+              <></>
+            ) : (
+              <Image
+                source={{
+                  uri:
+                    API_FLAG_URL +
+                    API_FLAG_CONVERT[`${meal.origin}`] +
+                    API_FLAG_IMAGE_EXTENSION,
+                }}
+                style={styles.flagImage}
+              />
+            )}
+            <View
+              style={{
+                flexDirection: 'column',
+                justifyContent: 'center',
+                marginLeft: 5,
+              }}>
+              <Text style={{textAlign: 'center', color: 'black', fontSize: 18}}>
+                {meal.name} | {meal.category}
+              </Text>
+              <Text style={{textAlign: 'center', color: 'black'}}>
+                {meal.origin}
+              </Text>
+            </View>
+            <View style={{marginLeft: 25}}>
+              {favorites.includes(route.params.data.id) ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    removeToFav();
+                  }}
+                  style={{alignItems: 'center'}}>
+                  <Ionicons name="heart" size={45} color="#900" />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => {
+                    addToFav();
+                  }}
+                  style={{alignItems: 'center'}}>
+                  <Ionicons name="heart-outline" size={45} color="#900" />
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+          <View style={{alignItems: 'center', marginTop: 10, marginBottom: 10}}>
+            {route.params.data.isCustomMeal ? (
+              <></>
+            ) : (
+              <Image
                 style={styles.mealThumbnail}
                 source={{
-                    uri: meal.imageUrl,
+                  uri: meal.imageUrl,
                 }}
-            />
-
-          {favorites.includes(route.params.data.id) ? (
-            <TouchableOpacity
-              onPress={() => {
-                removeToFav();
-              }}>
-              <Ionicons name="heart" size={30} color="#900" />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              onPress={() => {
-                addToFav();
-              }}>
-              <Ionicons name="heart-outline" size={30} color="#900" />
-            </TouchableOpacity>
-          )}
+              />
+            )}
+          </View>
         </View>
       )}
       numColumns={4}
@@ -119,13 +156,16 @@ const MealPageComponent = props => {
         );
       }}
       ListFooterComponent={() => (
-        <View>
-          <Text style={styles.instructions}>{meal.instructions}</Text>
+        <View style={{marginTop: 5}}>
+          <Text style={{color: 'black', textAlign: 'center', marginTop: 10}}>
+            {meal.instructions}
+          </Text>
           {route.params.data.isCustomMeal ? (
             <></>
           ) : (
             <TouchableHighlight
-              onPress={() => Linking.openURL(meal.youtubeUrl)}>
+              onPress={() => Linking.openURL(meal.youtubeUrl)}
+              style={{alignItems: 'center'}}>
               <Ionicons name="logo-youtube" color="red" size={75} />
             </TouchableHighlight>
           )}

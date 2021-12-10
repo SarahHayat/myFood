@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
   ingredientView: {
     flex: 1,
     alignItems: 'center',
+    marginTop: 20,
   },
   ingredientImage: {
     width: 90,
