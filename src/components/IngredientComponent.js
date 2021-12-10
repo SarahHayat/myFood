@@ -16,7 +16,6 @@ const IngredientComponent = props => {
 
   if (!props.isCustomMeal) {
     titleIngredient = props.name;
-    console.log('is not custom meal');
     ingredientImageUrl =
       // eslint-disable-next-line no-undef
       API_MEAL_INGREDIENT_IMAGE_URL +
@@ -31,7 +30,9 @@ const IngredientComponent = props => {
     <View
       key={props.index}
       style={IngredientComponentStyle.styles.ingredientView}>
-      <Text>{titleIngredient}</Text>
+      <Text>
+        {titleIngredient} {props.measure}
+      </Text>
       {props.isCustomMeal ? (
         <></>
       ) : (

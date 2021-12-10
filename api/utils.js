@@ -13,7 +13,6 @@ function apiStringsToArray(data, key, startIndex, endIndex) {
 }
 
 export function parseMealData(data) {
-  console.log({data});
   return {
     id: data.idMeal,
     name: data.strMeal,

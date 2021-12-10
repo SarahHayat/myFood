@@ -85,6 +85,7 @@ const NewRecipe = () => {
         instructions: instructions,
         imageUrl: file,
         ingredients: ingredients,
+        measures: [],
       },
     });
     dispatch({type: 'erase'});

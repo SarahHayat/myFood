@@ -13,6 +13,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MyReceipeHomeMade from '../components/MyReceipeHomeMade';
 import {Inscription} from '../components/Inscription';
 import {getRandomMeal} from '../api/meal/meal';
+import {SignIn} from '../components/SignIn';
+import MyFavoritesMeal from '../components/MyFavoritesMeal';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -23,10 +25,7 @@ const loadRandomMealId = async () => {
 };
 
 function Navigator() {
-  // const user = useSelector(s => s.auth.user);
-  // let user = null;
-  console.log('user ', user);
-  let user = 'user';
+  const user = useSelector(s => s.auth.user);
   return user ? (
     <Stack.Navigator
       initialRouteName="mealList"
@@ -41,7 +40,25 @@ function Navigator() {
   ) : (
     <Stack.Navigator initialRouteName="home">
       <Stack.Screen name="home" component={Home} />
+      <Stack.Screen name="connexion" component={SignIn} />
       <Stack.Screen name="inscription" component={Inscription} />
+    </Stack.Navigator>
+  );
+}
+
+function StackFav() {
+  return (
+    <Stack.Navigator initialRouteName="home">
+      <Stack.Screen name="Mes recettes favorites" component={MyFavoritesMeal} />
+      <Stack.Screen name="Detail" component={MealPageComponent} />
+    </Stack.Navigator>
+  );
+}
+function StackCustom() {
+  return (
+    <Stack.Navigator initialRouteName="home">
+      <Stack.Screen name="Mes recettes maison" component={MyReceipeHomeMade} />
+      <Stack.Screen name="Detail" component={MealPageComponent} />
     </Stack.Navigator>
   );
 }
@@ -70,10 +87,12 @@ function TabNavigator() {
         listeners={{
           tabPress: async e => {
             e.preventDefault();
-            navigation.navigate('mealDetail', {data: {
+            navigation.navigate('mealDetail', {
+              data: {
                 isCustomMeal: false,
-                    id: await loadRandomMealId()
-                }});
+                id: await loadRandomMealId(),
+              },
+            });
           },
         }}
         options={{
@@ -84,7 +103,7 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Nouvelle Recette"
+        name="+ Recette"
         component={NewRecipe}
         options={{
           headerShown: false,
@@ -94,12 +113,22 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Mes recettes maison"
-        component={MyReceipeHomeMade}
+        name="Recettes maison"
+        component={StackCustom}
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => (
             <Ionicons name="restaurant-outline" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Mes recettes"
+        component={StackFav}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color}) => (
+            <Ionicons name="heart" color={color} size={26} />
           ),
         }}
       />

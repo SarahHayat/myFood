@@ -3,6 +3,7 @@ import {Button, Text, View} from 'react-native';
 import OldInscription from './oldInscription';
 import SafeAreaView from 'react-native/Libraries/Components/SafeAreaView/SafeAreaView';
 import {Inscription} from './Inscription';
+import {SignIn} from './SignIn';
 
 const Home = () => {
   return (
@@ -13,7 +14,7 @@ const Home = () => {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-        <Inscription />
+        <SignIn />
       </View>
     </SafeAreaView>
   );

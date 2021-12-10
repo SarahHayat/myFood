@@ -28,7 +28,6 @@ const MyReceipeHomeMade = () => {
 
   return (
     <SafeAreaView>
-      <Text style={styles.title}>Mes recettes</Text>
       <FlatList
         data={receipe}
         renderItem={({item, index}) => {
@@ -50,7 +49,7 @@ const MyReceipeHomeMade = () => {
               <TouchableHighlight
                 style={styles.name}
                 onPress={() => {
-                  navigation.navigate('mealDetail', {
+                  navigation.push('Detail', {
                     data: {isCustomMeal: true, mealData: item},
                   });
                 }}>
