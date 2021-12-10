@@ -78,19 +78,17 @@ const MealPageComponent = props => {
               marginBottom: 8,
               marginTop: 10,
             }}>
-            {route.params.data.isCustomMeal ? (
-              <></>
-            ) : (
+
               <Image
-                source={{
-                  uri:
-                    API_FLAG_URL +
-                    API_FLAG_CONVERT[`${meal.origin}`] +
-                    API_FLAG_IMAGE_EXTENSION,
-                }}
-                style={styles.flagImage}
+                  source={{
+                      uri:
+                          API_FLAG_URL +
+                          API_FLAG_CONVERT[`${meal.origin}`] +
+                          API_FLAG_IMAGE_EXTENSION,
+                  }}
+                  style={styles.flagImage}
               />
-            )}
+
             <View
               style={{
                 flexDirection: 'column',
@@ -105,37 +103,42 @@ const MealPageComponent = props => {
               </Text>
             </View>
             <View style={{marginLeft: 25}}>
-              {favorites.includes(route.params.data.id) ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    removeToFav();
-                  }}
-                  style={{alignItems: 'center'}}>
-                  <Ionicons name="heart" size={45} color="#900" />
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity
-                  onPress={() => {
-                    addToFav();
-                  }}
-                  style={{alignItems: 'center'}}>
-                  <Ionicons name="heart-outline" size={45} color="#900" />
-                </TouchableOpacity>
-              )}
+              {
+                  route.params.data.isCustomMeal ? (
+                      <></>
+                  ) : (
+                      favorites.includes(route.params.data.id) ? (
+                          <TouchableOpacity
+                              onPress={() => {
+                                  removeToFav();
+                              }}
+                              style={{alignItems: 'center'}}>
+                              <Ionicons name="heart" size={45} color="#900" />
+                          </TouchableOpacity>
+                      ) : (
+                          <TouchableOpacity
+                              onPress={() => {
+                                  addToFav();
+                              }}
+                              style={{alignItems: 'center'}}>
+                              <Ionicons name="heart-outline" size={45} color="#900" />
+                          </TouchableOpacity>
+                      )
+                  )
+              }
             </View>
           </View>
           <View style={{alignItems: 'center', marginTop: 10, marginBottom: 10}}>
-            {route.params.data.isCustomMeal ? (
-              <></>
-            ) : (
               <Image
-                style={styles.mealThumbnail}
-                source={{
-                  uri: meal.imageUrl,
-                }}
+                  style={styles.mealThumbnail}
+                  source={{
+                      uri: meal.imageUrl,
+                  }}
               />
-            )}
           </View>
+            <Text style={{textAlign: 'center', color: 'black', fontSize: 18}}>
+                Ingredients
+            </Text>
         </View>
       )}
       numColumns={4}
@@ -154,7 +157,10 @@ const MealPageComponent = props => {
         );
       }}
       ListFooterComponent={() => (
-        <View style={{marginTop: 5}}>
+        <View style={{marginTop: 20}}>
+            <Text style={{textAlign: 'center', color: 'black', fontSize: 18}}>
+                Instructions
+            </Text>
           <Text style={{color: 'black', textAlign: 'center', marginTop: 10}}>
             {meal.instructions}
           </Text>
