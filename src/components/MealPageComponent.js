@@ -32,6 +32,10 @@ const MealPageComponent = props => {
       width: 300,
       height: 300,
     },
+      flagImage: {
+        height: 54,
+          width: 80,
+      },
   });
 
   const [meal, setMeal] = useState({});
@@ -44,22 +48,30 @@ const MealPageComponent = props => {
   const dispatch = useDispatch();
 
   const loadMeal = async () => {
-    setMeal(await getMeal(route.params.id));
+    setMeal(await getMeal(route.params.data.id));
   };
 
-  useEffect(() => {
-    loadMeal();
-  }, [route.params.id]);
+    useEffect(() => {
+        console.log(route.params.data);
+        if (route.params.data.isCustomMeal) {
+            setMeal(route.params.data.mealData);
+        }
+        else {
+            loadMeal();
+        }
+
+    }, [route.params.data]);
+
 
   const addToFav = useCallback(() => {
     console.log('add');
-    dispatch({type: 'add', value: route.params.id});
-  }, [route.params.id]);
+    dispatch({type: 'add', value: route.params.data.id});
+  }, [route.params.data.id]);
 
   const removeToFav = useCallback(() => {
     console.log('remove');
-    dispatch({type: 'remove', value: route.params.id});
-  }, [route.params.id]);
+    dispatch({type: 'remove', value: route.params.data.id});
+  }, [route.params.data.id]);
 
   return (
     <FlatList
@@ -69,25 +81,29 @@ const MealPageComponent = props => {
             {meal.name} | {meal.category}
           </Text>
           <Text>{meal.origin}</Text>
-          <Image
-            source={{
-              uri:
-                // eslint-disable-next-line no-undef
-                API_FLAG_URL +
-                // eslint-disable-next-line no-undef
-                API_FLAG_CONVERT[`${meal.origin}`] +
-                // eslint-disable-next-line no-undef
-                API_FLAG_IMAGE_EXTENSION,
-            }}
-            style={styles.flagImage}
-          />
-          <Image
-            style={styles.mealThumbnail}
-            source={{
-              uri: meal.imageUrl,
-            }}
-          />
-          {favorites.includes(route.params.id) ? (
+            {
+                route.params.data.isCustomMeal ? (
+                    <></>
+                ): (
+                    <Image source={{
+                        uri: API_FLAG_URL + API_FLAG_CONVERT[`${meal.origin}`] + API_FLAG_IMAGE_EXTENSION
+                    }}
+                           style={styles.flagImage}/>
+                )
+            }
+            {
+                route.params.data.isCustomMeal ? (
+                    <></>
+                ): (
+                    <Image
+                        style={styles.mealThumbnail}
+                        source={{
+                            uri: meal.imageUrl,
+                        }}
+                    />
+                )
+            }
+          {favorites.includes(route.params.data.id) ? (
             <TouchableOpacity
               onPress={() => {
                 removeToFav();
@@ -115,9 +131,15 @@ const MealPageComponent = props => {
       ListFooterComponent={() => (
         <View>
           <Text style={styles.instructions}>{meal.instructions}</Text>
-          <TouchableHighlight onPress={() => Linking.openURL(meal.youtubeUrl)}>
-            <Ionicons name="logo-youtube" color="red" size={75} />
-          </TouchableHighlight>
+            {
+                route.params.data.isCustomMeal ? (
+                    <></>
+                ): (
+                    <TouchableHighlight onPress={() => Linking.openURL(meal.youtubeUrl)}>
+                        <Ionicons name="logo-youtube" color='red' size={75} />
+                    </TouchableHighlight>
+                )
+            }
         </View>
       )}
     />

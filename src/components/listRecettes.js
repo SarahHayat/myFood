@@ -72,7 +72,10 @@ const ListRecettes = props => {
           <View>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('mealDetail', {id: item.idMeal});
+                navigation.navigate('mealDetail', {data: {
+                  isCustomMeal: false,
+                    id: item.idMeal
+                  }});
               }}
               style={styles.buttonMeal}>
               <Text style={styles.titleMeal}>{item.strMeal}</Text>

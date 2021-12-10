@@ -11,26 +11,27 @@ import IngredientComponentStyle from '../styles/IngredientComponentStyle';
 import axios from 'axios';
 
 const IngredientComponent = props => {
-  const ingredientImageUrl =
-    // eslint-disable-next-line no-undef
-    API_MEAL_INGREDIENT_IMAGE_URL +
-    props.name.replace(/\s/g, '%20') +
-    // eslint-disable-next-line no-undef
-    API_MEAL_INGREDIENT_IMAGE_EXTENSION;
+    let ingredientImageUrl = '';
 
-  return (
-    <View
-      style={IngredientComponentStyle.styles.ingredientView}
-      key={props.index}>
-      <Text>{props.name}</Text>
-      <Image
-        source={{
-          uri: ingredientImageUrl,
-        }}
-        style={IngredientComponentStyle.styles.ingredientImage}
-      />
-    </View>
-  );
+    if (!props.isCustomMeal) {
+        ingredientImageUrl = API_MEAL_INGREDIENT_IMAGE_URL + props.name.replace(/\s/g, '%20') + API_MEAL_INGREDIENT_IMAGE_EXTENSION;
+    }
+
+    return (
+        <View key={props.index} style={IngredientComponentStyle.styles.ingredientView}>
+            <Text>{props.name}</Text>
+            {
+                props.isCustomMeal ? (
+                    <></>
+                ): (
+                    <Image source={{
+                        uri: ingredientImageUrl
+                    }}
+                           style={IngredientComponentStyle.styles.ingredientImage}/>
+                )
+            }
+        </View>
+    );
 };
 
 export default IngredientComponent;
