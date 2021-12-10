@@ -33,7 +33,7 @@ const MyReceipeHomeMade = () => {
                 });
               }}>
               <View key={index} style={styles.container}>
-                {item.image ? (
+                {item.imageUrl ? (
                   <Image
                     source={{
                       uri: item.imageUrl,
